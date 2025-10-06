@@ -1,7 +1,6 @@
 import { Colors } from '@/constants/Colors';
 import { OnboardingSlide } from '@/constants/OnboardingData';
 import { Typography } from '@/constants/Typography';
-import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
     Dimensions,
@@ -20,17 +19,8 @@ interface OnboardingSlideProps {
 export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps) {
   return (
     <View style={styles.container}>
-      {/* Clean Gradient Background */}
-      <LinearGradient
-        colors={[
-          slide.backgroundColor,
-          slide.accentColor,
-          slide.backgroundColor
-        ]}
-        style={styles.gradientBackground}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
+      {/* Clean Background - No gradient colors */}
+      <View style={styles.cleanBackground}>
         {/* Minimal Floating Elements */}
         <View style={styles.floatingElements}>
           <View style={[styles.floatingCircle, styles.circle1, { backgroundColor: slide.accentColor }]} />
@@ -67,7 +57,7 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
             <Text style={styles.description} numberOfLines={3}>{slide.description}</Text>
           </View>
         </View>
-      </LinearGradient>
+      </View>
     </View>
   );
 }
@@ -75,11 +65,12 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height - 180, // Optimized height for better fit
+    height: height - 220, // Reduced height for smaller carousel
   },
-  gradientBackground: {
+  cleanBackground: {
     flex: 1,
     position: 'relative' as const,
+    backgroundColor: '#FFFFFF', // Clean white background instead of gradient
   },
 
   // Minimal Floating Elements
@@ -125,32 +116,32 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
 
-  // Clean Image Section - Smaller container height, bigger image with minimal borders
+  // Smaller Carousel Image Section - Compact design
   imageSection: {
-    flex: 0.7, // Increased to accommodate larger image section
+    flex: 0.6, // Reduced from 0.7 for smaller carousel
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    paddingVertical: 20,
+    paddingVertical: 15, // Reduced padding
   },
   imageWrapper: {
     position: 'relative' as const,
     alignItems: 'center' as const,
   },
   imageContainer: {
-    width: width * 0.8, // Bigger container width
-    height: width * 0.5, // Smaller container height as requested
+    width: width * 0.85, // Increased width for bigger image
+    height: width * 0.6, // Increased height for bigger image
     borderRadius: 12,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent', // No background color
     zIndex: 2,
     overflow: 'hidden' as const,
-    padding: 4, // Small borders only
+    padding: 0, // No padding/borders for cleaner look
   },
   mainImage: {
     width: '100%', // Fill container completely
     height: '100%', // Fill container completely
-    borderRadius: 8,
+    borderRadius: 10,
   },
 
   // Minimal Decorative Elements
@@ -170,13 +161,14 @@ const styles = StyleSheet.create({
     right: 30,
   },
 
-  // Text Section - Positioned below image with dark MOVA colors
+  // Text Section - Below the smaller carousel container
   textSection: {
-    flex: 0.3,
+    flex: 0.4, // Increased space for text below carousel
     alignItems: 'center' as const,
-    paddingTop: 10,
+    paddingTop: 20, // More space from carousel
     paddingHorizontal: 24,
     paddingBottom: 20,
+    justifyContent: 'flex-start' as const, // Align text at top of section
   },
 
   // Dark MOVA Colors Typography

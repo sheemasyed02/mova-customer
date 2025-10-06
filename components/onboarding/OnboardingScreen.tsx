@@ -90,7 +90,7 @@ export default function OnboardingScreen() {
           colors={['transparent', 'rgba(255, 255, 255, 0.98)', '#ffffff']}
           style={styles.bottomGradient}
         >
-          {/* Progress Indicator */}
+          {/* Progress Indicator - Only Circles */}
           <View style={styles.progressContainer}>
             <View style={styles.progressDotsContainer}>
               {onboardingData.map((_, index) => (
@@ -104,9 +104,6 @@ export default function OnboardingScreen() {
                 />
               ))}
             </View>
-            <Text style={styles.progressText}>
-              {currentIndex + 1} of {onboardingData.length}
-            </Text>
           </View>
 
           {/* Single Get Started Button */}
@@ -174,13 +171,12 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     alignItems: 'center' as const,
-    marginBottom: 40,
+    marginBottom: 30, // Reduced margin since no text below
   },
   progressDotsContainer: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    marginBottom: 12,
   },
   progressDot: {
     width: 8,
@@ -194,11 +190,6 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     backgroundColor: Colors.primary.teal,
-  },
-  progressText: {
-    fontSize: Typography.sizes.caption,
-    fontWeight: '500' as const,
-    color: Colors.text.secondary,
   },
   buttonContainer: {
     alignItems: 'center' as const,
