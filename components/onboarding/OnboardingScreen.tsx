@@ -59,12 +59,15 @@ export default function OnboardingScreen() {
       
       {/* Enhanced Skip Button */}
       <TouchableOpacity style={styles.skipButton} onPress={skip}>
-        <View style={styles.skipButtonContent}>
+        <LinearGradient
+          colors={['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.85)']}
+          style={styles.skipButtonContent}
+        >
           <Text style={styles.skipText}>Skip</Text>
-        </View>
+        </LinearGradient>
       </TouchableOpacity>
 
-      {/* Progress Indicator */}
+      {/* Enhanced Progress Indicator */}
       <View style={styles.progressContainer}>
         <View style={styles.progressTrack}>
           <Animated.View 
@@ -79,6 +82,7 @@ export default function OnboardingScreen() {
               }
             ]}
           />
+          <View style={styles.progressGlow} />
         </View>
         <Text style={styles.progressText}>
           {currentIndex + 1} of {onboardingData.length}
@@ -174,7 +178,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   skipButtonContent: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 20,
     paddingVertical: 8,
     paddingHorizontal: 16,
@@ -208,6 +211,22 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: Colors.primary.teal,
     borderRadius: 2,
+    shadowColor: Colors.primary.teal,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  progressGlow: {
+    position: 'absolute' as const,
+    top: -2,
+    left: 0,
+    right: 0,
+    bottom: -2,
+    backgroundColor: Colors.primary.teal,
+    borderRadius: 3,
+    opacity: 0.3,
+    zIndex: -1,
   },
   progressText: {
     fontSize: Typography.sizes.caption,
