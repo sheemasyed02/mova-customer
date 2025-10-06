@@ -19,43 +19,24 @@ interface OnboardingSlideProps {
 export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps) {
   return (
     <View style={styles.container}>
-      {/* Clean Background - No gradient colors */}
-      <View style={styles.cleanBackground}>
-        {/* Minimal Floating Elements */}
-        <View style={styles.floatingElements}>
-          <View style={[styles.floatingCircle, styles.circle1, { backgroundColor: slide.accentColor }]} />
-          <View style={[styles.floatingCircle, styles.circle2, { backgroundColor: Colors.text.white }]} />
-          <View style={[styles.floatingCircle, styles.circle3, { backgroundColor: slide.accentColor }]} />
-        </View>
-
-        {/* Main Content - Fits Screen Height */}
-        <View style={styles.content}>
-          {/* Clean Image Section */}
-          <View style={styles.imageSection}>
-            <View style={styles.imageWrapper}>
-              {/* Clean Image Container - Transparent background */}
-              <View style={styles.imageContainer}>
-                <Image
-                  source={slide.image}
-                  style={styles.mainImage}
-                  resizeMode="contain"
-                />
-              </View>
-
-              {/* Minimal Decorative Elements */}
-              <View style={[styles.decorDot, styles.dot1, { backgroundColor: slide.accentColor }]} />
-              <View style={[styles.decorDot, styles.dot2, { backgroundColor: Colors.text.white }]} />
-            </View>
-          </View>
-
-          {/* Compact Text Section */}
-          <View style={styles.textSection}>
-            {/* Clean Title - Dark MOVA Colors */}
-            <Text style={styles.title} numberOfLines={2}>{slide.title}</Text>
-            
-            {/* Clean Description - Dark MOVA Colors */}
-            <Text style={styles.description} numberOfLines={3}>{slide.description}</Text>
-          </View>
+      {/* Full Screen Image Background */}
+      <View style={styles.imageBackground}>
+        <Image
+          source={slide.image}
+          style={styles.fullScreenImage}
+          resizeMode="cover"
+        />
+        
+        {/* Dark Overlay for Text Visibility */}
+        <View style={styles.overlay} />
+        
+        {/* Text Overlay on Image */}
+        <View style={styles.textOverlay}>
+          {/* Clean Title - White for visibility */}
+          <Text style={styles.title} numberOfLines={2}>{slide.title}</Text>
+          
+          {/* Clean Description - White for visibility */}
+          <Text style={styles.description} numberOfLines={3}>{slide.description}</Text>
         </View>
       </View>
     </View>
@@ -65,128 +46,63 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height - 220, // Reduced height for smaller carousel
+    height: height - 180, // Adjusted for better full screen effect
   },
-  cleanBackground: {
+  
+  // Full Screen Image Background
+  imageBackground: {
     flex: 1,
     position: 'relative' as const,
-    backgroundColor: '#FFFFFF', // Clean white background instead of gradient
   },
-
-  // Minimal Floating Elements
-  floatingElements: {
+  fullScreenImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 0, // Remove border radius for full coverage
+  },
+  
+  // Dark Overlay for Text Visibility
+  overlay: {
     position: 'absolute' as const,
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent dark overlay
     zIndex: 1,
   },
-  floatingCircle: {
+  
+  // Text Overlay on Image
+  textOverlay: {
     position: 'absolute' as const,
-    borderRadius: 50,
-    opacity: 0.08,
-  },
-  circle1: {
-    width: 80,
-    height: 80,
-    top: '20%',
-    left: '10%',
-  },
-  circle2: {
-    width: 50,
-    height: 50,
-    top: '30%',
-    right: '15%',
-  },
-  circle3: {
-    width: 60,
-    height: 60,
-    bottom: '25%',
-    left: '15%',
-  },
-
-  // Main Content - Optimized for image above, text below layout
-  content: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 80, // Account for skip button
-    paddingBottom: 20,
-    justifyContent: 'flex-start' as const, // Changed from space-between to flex-start
+    bottom: 40, // Position text at bottom of image
+    left: 20,
+    right: 20,
+    alignItems: 'center' as const,
     zIndex: 2,
   },
 
-  // Smaller Carousel Image Section - Compact design
-  imageSection: {
-    flex: 0.6, // Reduced from 0.7 for smaller carousel
-    alignItems: 'center' as const,
-    justifyContent: 'center' as const,
-    paddingVertical: 15, // Reduced padding
-  },
-  imageWrapper: {
-    position: 'relative' as const,
-    alignItems: 'center' as const,
-  },
-  imageContainer: {
-    width: width * 0.85, // Increased width for bigger image
-    height: width * 0.6, // Increased height for bigger image
-    borderRadius: 12,
-    alignItems: 'center' as const,
-    justifyContent: 'center' as const,
-    backgroundColor: 'transparent', // No background color
-    zIndex: 2,
-    overflow: 'hidden' as const,
-    padding: 0, // No padding/borders for cleaner look
-  },
-  mainImage: {
-    width: '100%', // Fill container completely
-    height: '100%', // Fill container completely
-    borderRadius: 10,
-  },
-
-  // Minimal Decorative Elements
-  decorDot: {
-    position: 'absolute' as const,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    opacity: 0.6,
-  },
-  dot1: {
-    top: 15,
-    left: 25,
-  },
-  dot2: {
-    bottom: 20,
-    right: 30,
-  },
-
-  // Text Section - Below the smaller carousel container
-  textSection: {
-    flex: 0.4, // Increased space for text below carousel
-    alignItems: 'center' as const,
-    paddingTop: 20, // More space from carousel
-    paddingHorizontal: 24,
-    paddingBottom: 20,
-    justifyContent: 'flex-start' as const, // Align text at top of section
-  },
-
-  // Dark MOVA Colors Typography
+  // White Typography for Visibility on Images
   title: {
-    fontSize: Typography.sizes.h3 - 2, // Slightly smaller to fit better
+    fontSize: Typography.sizes.h2, // Larger for better visibility
     fontWeight: '700' as const,
-    color: Colors.text.primary, // Dark MOVA color #0A2F35
+    color: Colors.text.white, // White for visibility on images
     textAlign: 'center' as const,
     marginBottom: 12,
-    lineHeight: Typography.sizes.h3,
+    lineHeight: Typography.sizes.h2 + 4,
     paddingHorizontal: 10,
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   description: {
-    fontSize: Typography.sizes.caption + 2, // Slightly bigger for readability
+    fontSize: Typography.sizes.body, // Larger for better readability
     fontWeight: '400' as const,
-    color: Colors.primary.darkTeal, // Dark teal MOVA color #238276
+    color: Colors.text.white, // White for visibility on images
     textAlign: 'center' as const,
-    lineHeight: Typography.sizes.caption + 8, // Better line spacing
+    lineHeight: Typography.sizes.body + 6,
     paddingHorizontal: 15,
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
 });

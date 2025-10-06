@@ -25,7 +25,7 @@ export const onboardingData: OnboardingSlide[] = [
     image: require('@/assets/illustrations/Mobile booking illustration.png'),
     backgroundColor: '#3FA5B8',
     accentColor: '#5DCDCB',
-    icon: require('@/assets/images/Mova.png'),
+    icon: require('@/assets/images/Mova1.jpg'),
   },
   {
     id: 3,

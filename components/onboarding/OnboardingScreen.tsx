@@ -1,5 +1,5 @@
 import OnboardingSlide from '@/components/onboarding/OnboardingSlide';
-import Button from '@/components/ui/Button';
+import AnimatedButton from '@/components/ui/AnimatedButton';
 import { Colors } from '@/constants/Colors';
 import { onboardingData } from '@/constants/OnboardingData';
 import { Typography } from '@/constants/Typography';
@@ -106,13 +106,11 @@ export default function OnboardingScreen() {
             </View>
           </View>
 
-          {/* Single Get Started Button */}
+          {/* Single Get Started Button with Animation */}
           <View style={styles.buttonContainer}>
-            <Button
+            <AnimatedButton
               title="Get Started"
               onPress={getStarted}
-              variant="primary"
-              size="large"
               style={styles.getStartedButton}
             />
             
