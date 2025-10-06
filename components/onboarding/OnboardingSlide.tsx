@@ -20,119 +20,64 @@ interface OnboardingSlideProps {
 export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps) {
   return (
     <View style={styles.container}>
-      {/* Advanced Gradient Background */}
+      {/* Clean Gradient Background */}
       <LinearGradient
         colors={[
           slide.backgroundColor,
           slide.accentColor,
-          `${slide.backgroundColor}CC`,
           slide.backgroundColor
         ]}
         style={styles.gradientBackground}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        {/* Enhanced Floating Background Elements */}
+        {/* Minimal Floating Elements */}
         <View style={styles.floatingElements}>
           <View style={[styles.floatingCircle, styles.circle1, { backgroundColor: slide.accentColor }]} />
           <View style={[styles.floatingCircle, styles.circle2, { backgroundColor: Colors.text.white }]} />
           <View style={[styles.floatingCircle, styles.circle3, { backgroundColor: slide.accentColor }]} />
-          <View style={[styles.floatingCircle, styles.circle4, { backgroundColor: Colors.text.white }]} />
-          <View style={[styles.floatingCircle, styles.circle5, { backgroundColor: slide.accentColor }]} />
         </View>
 
-        {/* Geometric Pattern Background */}
-        <View style={styles.geometricPattern}>
-          <View style={[styles.triangle, { borderBottomColor: slide.accentColor }]} />
-          <View style={[styles.diamond, { backgroundColor: Colors.text.white }]} />
-        </View>
-
-        {/* Background Icon with Animation Effect */}
-        <View style={styles.backgroundIcon}>
-          <Image
-            source={slide.icon}
-            style={[styles.bgIcon, { tintColor: Colors.text.white }]}
-            resizeMode="contain"
-          />
-        </View>
-
-        {/* Main Content */}
+        {/* Main Content - Fits Screen Height */}
         <View style={styles.content}>
-          {/* Premium Image Section */}
+          {/* Compact Image Section */}
           <View style={styles.imageSection}>
             <View style={styles.imageWrapper}>
-              {/* Multi-layer Glow Effect */}
-              <View style={[styles.imageGlow, styles.outerGlow, { backgroundColor: Colors.text.white }]} />
-              <View style={[styles.imageGlow, styles.innerGlow, { backgroundColor: slide.accentColor }]} />
-              
-              {/* Premium Image Container */}
+              {/* Clean Image Container */}
               <View style={[styles.imageContainer, { 
-                backgroundColor: `${Colors.text.white}20`,
-                borderColor: `${Colors.text.white}40`,
+                backgroundColor: `${Colors.text.white}15`,
+                borderColor: `${Colors.text.white}30`,
               }]}>
                 <Image
                   source={slide.image}
                   style={styles.mainImage}
                   resizeMode="contain"
                 />
-                
-                {/* Overlay gradient for depth */}
-                <LinearGradient
-                  colors={['transparent', 'rgba(255,255,255,0.1)']}
-                  style={styles.imageOverlay}
-                />
               </View>
 
-              {/* Enhanced Decorative Elements */}
+              {/* Minimal Decorative Elements */}
               <View style={[styles.decorDot, styles.dot1, { backgroundColor: slide.accentColor }]} />
               <View style={[styles.decorDot, styles.dot2, { backgroundColor: Colors.text.white }]} />
-              <View style={[styles.decorDot, styles.dot3, { backgroundColor: slide.accentColor }]} />
-              <View style={[styles.decorDot, styles.dot4, { backgroundColor: Colors.text.white }]} />
-              
-              {/* Floating rings */}
-              <View style={[styles.decorRing, styles.ring1, { borderColor: Colors.text.white }]} />
-              <View style={[styles.decorRing, styles.ring2, { borderColor: slide.accentColor }]} />
             </View>
           </View>
 
-          {/* Premium Text Section */}
+          {/* Compact Text Section */}
           <View style={styles.textSection}>
-            {/* Enhanced Step Indicator */}
+            {/* Step Indicator */}
             <View style={styles.stepIndicator}>
               <View style={[styles.stepBadge, { backgroundColor: slide.accentColor }]}>
                 <Text style={styles.stepNumber}>{slide.id}</Text>
               </View>
               <Text style={styles.stepText}>Step {slide.id} of 3</Text>
-              <View style={[styles.stepLine, { backgroundColor: slide.accentColor }]} />
             </View>
 
-            {/* Premium Title with Better Typography */}
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>{slide.title}</Text>
-              <View style={[styles.titleUnderline, { backgroundColor: slide.accentColor }]} />
-            </View>
+            {/* Clean Title */}
+            <Text style={styles.title}>{slide.title}</Text>
             
-            {/* Enhanced Description */}
-            <View style={styles.descriptionContainer}>
-              <Text style={styles.description}>{slide.description}</Text>
-            </View>
-
-            {/* Premium Feature Highlights */}
-            <View style={styles.featureHighlights}>
-              <View style={[styles.featureDot, styles.activeDot, { backgroundColor: Colors.text.white }]} />
-              <View style={[styles.featureDot, { backgroundColor: `${Colors.text.white}60` }]} />
-              <View style={[styles.featureDot, { backgroundColor: `${Colors.text.white}40` }]} />
-              <View style={[styles.featureDot, { backgroundColor: `${Colors.text.white}60` }]} />
-              <View style={[styles.featureDot, { backgroundColor: `${Colors.text.white}40` }]} />
-            </View>
+            {/* Clean Description */}
+            <Text style={styles.description}>{slide.description}</Text>
           </View>
         </View>
-
-        {/* Premium Bottom Wave with Gradient */}
-        <LinearGradient
-          colors={['transparent', 'rgba(255, 255, 255, 0.15)']}
-          style={styles.bottomWave}
-        />
       </LinearGradient>
     </View>
   );
@@ -141,14 +86,14 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
 const styles = StyleSheet.create({
   container: {
     width,
-    flex: 1,
+    height: height - 200, // Leave space for bottom section
   },
   gradientBackground: {
     flex: 1,
     position: 'relative' as const,
   },
 
-  // Enhanced Floating Background Elements
+  // Minimal Floating Elements
   floatingElements: {
     position: 'absolute' as const,
     top: 0,
@@ -160,88 +105,40 @@ const styles = StyleSheet.create({
   floatingCircle: {
     position: 'absolute' as const,
     borderRadius: 50,
-    opacity: 0.1,
+    opacity: 0.08,
   },
   circle1: {
-    width: 100,
-    height: 100,
-    top: '15%',
+    width: 80,
+    height: 80,
+    top: '20%',
     left: '10%',
   },
   circle2: {
-    width: 60,
-    height: 60,
-    top: '25%',
+    width: 50,
+    height: 50,
+    top: '30%',
     right: '15%',
   },
   circle3: {
-    width: 80,
-    height: 80,
-    bottom: '20%',
-    left: '20%',
-  },
-  circle4: {
-    width: 45,
-    height: 45,
-    top: '45%',
-    left: '5%',
-  },
-  circle5: {
-    width: 70,
-    height: 70,
-    bottom: '35%',
-    right: '10%',
+    width: 60,
+    height: 60,
+    bottom: '25%',
+    left: '15%',
   },
 
-  // Geometric Pattern Background
-  geometricPattern: {
-    position: 'absolute' as const,
-    top: '30%',
-    left: '75%',
-    zIndex: 1,
-  },
-  triangle: {
-    width: 0,
-    height: 0,
-    borderLeftWidth: 15,
-    borderRightWidth: 15,
-    borderBottomWidth: 25,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    opacity: 0.1,
-  },
-  diamond: {
-    width: 20,
-    height: 20,
-    transform: [{ rotate: '45deg' }],
-    opacity: 0.1,
-    marginTop: 20,
-  },
-
-  // Background Icon
-  backgroundIcon: {
-    position: 'absolute' as const,
-    top: '10%',
-    right: -50,
-    opacity: 0.05,
-    zIndex: 1,
-  },
-  bgIcon: {
-    width: 200,
-    height: 200,
-  },
-
-  // Main Content
+  // Main Content - Optimized for Height
   content: {
     flex: 1,
     paddingHorizontal: 24,
-    paddingTop: 80,
+    paddingTop: 100, // Account for skip button
+    paddingBottom: 20,
+    justifyContent: 'space-between' as const,
     zIndex: 2,
   },
 
-  // Enhanced Image Section
+  // Compact Image Section
   imageSection: {
-    flex: 0.55,
+    flex: 0.6,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
   },
@@ -249,193 +146,95 @@ const styles = StyleSheet.create({
     position: 'relative' as const,
     alignItems: 'center' as const,
   },
-  imageGlow: {
-    position: 'absolute' as const,
-    borderRadius: 150,
-    zIndex: 1,
-  },
-  outerGlow: {
-    width: width * 0.8,
-    height: width * 0.8,
-    opacity: 0.1,
-  },
-  innerGlow: {
-    width: width * 0.7,
-    height: width * 0.7,
-    opacity: 0.15,
-  },
   imageContainer: {
-    width: width * 0.65,
-    height: width * 0.65,
-    borderRadius: 20,
-    borderWidth: 2,
+    width: width * 0.55,
+    height: width * 0.55,
+    borderRadius: 16,
+    borderWidth: 1,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
     shadowColor: Colors.text.white,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 12,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 8,
     zIndex: 2,
     overflow: 'hidden' as const,
   },
   mainImage: {
-    width: width * 0.55,
-    height: width * 0.55,
-  },
-  imageOverlay: {
-    position: 'absolute' as const,
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 1,
+    width: width * 0.45,
+    height: width * 0.45,
   },
 
-  // Enhanced Decorative Elements
+  // Minimal Decorative Elements
   decorDot: {
     position: 'absolute' as const,
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    opacity: 0.8,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    opacity: 0.6,
   },
   dot1: {
-    top: 20,
-    left: 30,
+    top: 15,
+    left: 25,
   },
   dot2: {
-    top: 60,
-    right: 20,
-  },
-  dot3: {
-    bottom: 40,
-    left: 20,
-  },
-  dot4: {
-    bottom: 60,
-    right: 40,
+    bottom: 20,
+    right: 30,
   },
 
-  // Floating rings
-  decorRing: {
-    position: 'absolute' as const,
-    borderWidth: 2,
-    borderRadius: 25,
-    opacity: 0.3,
-  },
-  ring1: {
-    width: 50,
-    height: 50,
-    top: -10,
-    right: 10,
-  },
-  ring2: {
-    width: 30,
-    height: 30,
-    bottom: 10,
-    left: 5,
-  },
-
-  // Modern Text Section
+  // Compact Text Section
   textSection: {
-    flex: 0.45,
-    paddingTop: 40,
+    flex: 0.4,
     alignItems: 'center' as const,
+    paddingTop: 20,
   },
 
-  // Enhanced Step Indicator
+  // Clean Step Indicator
   stepIndicator: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   stepBadge: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    marginRight: 12,
+    marginRight: 10,
   },
   stepNumber: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '700' as const,
     color: Colors.text.white,
   },
   stepText: {
-    fontSize: Typography.sizes.body,
-    fontWeight: '600' as const,
+    fontSize: Typography.sizes.caption,
+    fontWeight: '500' as const,
     color: Colors.text.white,
     opacity: 0.8,
-    marginRight: 12,
-  },
-  stepLine: {
-    width: 40,
-    height: 2,
-    borderRadius: 1,
   },
 
-  // Enhanced Typography
-  titleContainer: {
-    alignItems: 'center' as const,
-    marginBottom: 16,
-  },
+  // Clean Typography
   title: {
-    fontSize: Typography.sizes.h1,
-    fontWeight: '800' as const,
+    fontSize: Typography.sizes.h2,
+    fontWeight: '700' as const,
     color: Colors.text.white,
     textAlign: 'center' as const,
-    lineHeight: Typography.sizes.h1 + 8,
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
-    marginBottom: 8,
-  },
-  titleUnderline: {
-    width: 60,
-    height: 3,
-    borderRadius: 2,
-  },
-  descriptionContainer: {
-    paddingHorizontal: 8,
-    marginBottom: 24,
+    marginBottom: 12,
+    lineHeight: Typography.sizes.h2 + 4,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
   description: {
-    fontSize: Typography.sizes.bodyLarge,
+    fontSize: Typography.sizes.body,
     fontWeight: '400' as const,
     color: Colors.text.white,
     textAlign: 'center' as const,
-    lineHeight: Typography.sizes.bodyLarge + 6,
-    opacity: 0.95,
-  },
-
-  // Enhanced Feature Highlights
-  featureHighlights: {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
-    justifyContent: 'center' as const,
-  },
-  featureDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 6,
-  },
-  activeDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-  },
-
-  // Enhanced Bottom Wave
-  bottomWave: {
-    position: 'absolute' as const,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 50,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
+    lineHeight: Typography.sizes.body + 4,
+    opacity: 0.9,
+    paddingHorizontal: 12,
   },
 });
