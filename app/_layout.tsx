@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
+import LoadingScreen from '@/components/LoadingScreen';
 import { useColorScheme } from '@/components/useColorScheme';
 
 export {
@@ -38,8 +39,9 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  // Show custom loading screen while fonts are loading
   if (!loaded) {
-    return null;
+    return <LoadingScreen />;
   }
 
   return <RootLayoutNav />;

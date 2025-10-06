@@ -6,9 +6,8 @@ import {
     Animated,
     Dimensions,
     StyleSheet,
-    Text,
     TouchableOpacity,
-    ViewStyle,
+    ViewStyle
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -24,82 +23,90 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
   const colorAnimation = useRef(new Animated.Value(0)).current;
 
   const handlePressIn = () => {
-    // Start sliding animation
+    // Start sliding animation - much slower for better visual effect
     Animated.parallel([
       Animated.timing(slideAnimation, {
         toValue: 1,
-        duration: 300,
+        duration: 2000, // Much slower - 2 seconds for smooth sliding
         useNativeDriver: false,
       }),
       Animated.timing(colorAnimation, {
         toValue: 1,
-        duration: 300,
-        useNativeDriver: false,
-      }),
-    ]).start();
-  };
-
-  const handlePressOut = () => {
-    // Complete the slide and trigger navigation
-    Animated.parallel([
-      Animated.timing(slideAnimation, {
-        toValue: 2,
-        duration: 200,
-        useNativeDriver: false,
-      }),
-      Animated.timing(colorAnimation, {
-        toValue: 2,
-        duration: 200,
+        duration: 2000, // Match the slide duration
         useNativeDriver: false,
       }),
     ]).start(() => {
-      // Reset and call onPress
-      slideAnimation.setValue(0);
-      colorAnimation.setValue(0);
-      onPress();
+      // Only trigger navigation AFTER complete slide animation
+      setTimeout(() => {
+        onPress();
+        // Reset animations after navigation
+        slideAnimation.setValue(0);
+        colorAnimation.setValue(0);
+      }, 100); // Small delay to ensure smooth transition
     });
   };
 
+  // Arrow starts from left and slides to right - slower and smoother
   const arrowTranslateX = slideAnimation.interpolate({
-    inputRange: [0, 1, 2],
-    outputRange: [0, width * 0.6, width],
+    inputRange: [0, 1],
+    outputRange: [0, width - 120], // Account for circular container size and padding
   });
 
+  // Background color: white -> dark teal (logo color)
   const backgroundColor = colorAnimation.interpolate({
-    inputRange: [0, 1, 2],
-    outputRange: [Colors.primary.teal, Colors.primary.darkTeal, Colors.functional.success],
+    inputRange: [0, 1],
+    outputRange: ['#FFFFFF', Colors.text.primary], // White to dark logo color
   });
 
-  const arrowScale = slideAnimation.interpolate({
-    inputRange: [0, 1, 2],
-    outputRange: [1, 1.2, 0],
+  // Text color: dark (logo color) -> white
+  const textColor = colorAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [Colors.text.primary, '#FFFFFF'], // Dark to white
+  });
+
+  // Border color to maintain button structure
+  const borderColor = colorAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [Colors.text.primary, Colors.text.primary], // Always dark border
   });
 
   return (
     <TouchableOpacity
       style={[styles.container, style]}
       onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
       activeOpacity={1}
     >
-      <Animated.View style={[styles.button, { backgroundColor }]}>
-        <Text style={styles.text}>{title}</Text>
+      <Animated.View style={[
+        styles.button, 
+        { 
+          backgroundColor,
+          borderColor,
+          borderWidth: 2,
+        }
+      ]}>
+        <Animated.Text style={[styles.text, { color: textColor }]}>
+          {title}
+        </Animated.Text>
         
         <Animated.View 
           style={[
             styles.arrowContainer,
             {
-              transform: [
-                { translateX: arrowTranslateX },
-                { scale: arrowScale }
-              ]
+              transform: [{ translateX: arrowTranslateX }],
+              backgroundColor: '#FFFFFF', // White circular background
+              borderRadius: 20, // Make it circular
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 4,
+              elevation: 3,
             }
           ]}
         >
           <Ionicons 
             name="arrow-forward" 
-            size={24} 
-            color={Colors.text.white} 
+            size={20} 
+            color={Colors.text.primary} 
           />
         </Animated.View>
       </Animated.View>
@@ -130,14 +137,16 @@ const styles = StyleSheet.create({
   text: {
     fontSize: Typography.sizes.bodyLarge,
     fontWeight: '600',
-    color: Colors.text.white,
     textAlign: 'center',
     flex: 1,
   },
   arrowContainer: {
     position: 'absolute',
-    right: 20,
+    left: 16, // Start from left side with some padding
     alignItems: 'center',
     justifyContent: 'center',
+    width: 40, // Larger circular container
+    height: 40,
+    borderRadius: 20, // Perfect circle
   },
 });
