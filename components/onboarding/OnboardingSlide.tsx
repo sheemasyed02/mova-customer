@@ -40,14 +40,11 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
 
         {/* Main Content - Fits Screen Height */}
         <View style={styles.content}>
-          {/* Compact Image Section */}
+          {/* Clean Image Section */}
           <View style={styles.imageSection}>
             <View style={styles.imageWrapper}>
-              {/* Clean Image Container */}
-              <View style={[styles.imageContainer, { 
-                backgroundColor: `${Colors.text.white}15`,
-                borderColor: `${Colors.text.white}30`,
-              }]}>
+              {/* Clean Image Container - Transparent background */}
+              <View style={styles.imageContainer}>
                 <Image
                   source={slide.image}
                   style={styles.mainImage}
@@ -63,19 +60,11 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
 
           {/* Compact Text Section */}
           <View style={styles.textSection}>
-            {/* Step Indicator */}
-            <View style={styles.stepIndicator}>
-              <View style={[styles.stepBadge, { backgroundColor: slide.accentColor }]}>
-                <Text style={styles.stepNumber}>{slide.id}</Text>
-              </View>
-              <Text style={styles.stepText}>Step {slide.id} of 3</Text>
-            </View>
-
-            {/* Clean Title */}
-            <Text style={styles.title}>{slide.title}</Text>
+            {/* Clean Title - Dark MOVA Colors */}
+            <Text style={styles.title} numberOfLines={2}>{slide.title}</Text>
             
-            {/* Clean Description */}
-            <Text style={styles.description}>{slide.description}</Text>
+            {/* Clean Description - Dark MOVA Colors */}
+            <Text style={styles.description} numberOfLines={3}>{slide.description}</Text>
           </View>
         </View>
       </LinearGradient>
@@ -86,7 +75,7 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height - 200, // Leave space for bottom section
+    height: height - 180, // Optimized height for better fit
   },
   gradientBackground: {
     flex: 1,
@@ -126,44 +115,42 @@ const styles = StyleSheet.create({
     left: '15%',
   },
 
-  // Main Content - Optimized for Height
+  // Main Content - Optimized for image above, text below layout
   content: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 100, // Account for skip button
+    paddingHorizontal: 20,
+    paddingTop: 80, // Account for skip button
     paddingBottom: 20,
-    justifyContent: 'space-between' as const,
+    justifyContent: 'flex-start' as const, // Changed from space-between to flex-start
     zIndex: 2,
   },
 
-  // Compact Image Section
+  // Clean Image Section - Smaller container height, bigger image with minimal borders
   imageSection: {
-    flex: 0.6,
+    flex: 0.7, // Increased to accommodate larger image section
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
+    paddingVertical: 20,
   },
   imageWrapper: {
     position: 'relative' as const,
     alignItems: 'center' as const,
   },
   imageContainer: {
-    width: width * 0.55,
-    height: width * 0.55,
-    borderRadius: 16,
-    borderWidth: 1,
+    width: width * 0.8, // Bigger container width
+    height: width * 0.5, // Smaller container height as requested
+    borderRadius: 12,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
-    shadowColor: Colors.text.white,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.2,
-    shadowRadius: 12,
-    elevation: 8,
+    backgroundColor: 'transparent',
     zIndex: 2,
     overflow: 'hidden' as const,
+    padding: 4, // Small borders only
   },
   mainImage: {
-    width: width * 0.45,
-    height: width * 0.45,
+    width: '100%', // Fill container completely
+    height: '100%', // Fill container completely
+    borderRadius: 8,
   },
 
   // Minimal Decorative Elements
@@ -183,58 +170,31 @@ const styles = StyleSheet.create({
     right: 30,
   },
 
-  // Compact Text Section
+  // Text Section - Positioned below image with dark MOVA colors
   textSection: {
-    flex: 0.4,
+    flex: 0.3,
     alignItems: 'center' as const,
-    paddingTop: 20,
+    paddingTop: 10,
+    paddingHorizontal: 24,
+    paddingBottom: 20,
   },
 
-  // Clean Step Indicator
-  stepIndicator: {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
-    marginBottom: 16,
-  },
-  stepBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    alignItems: 'center' as const,
-    justifyContent: 'center' as const,
-    marginRight: 10,
-  },
-  stepNumber: {
-    fontSize: 14,
-    fontWeight: '700' as const,
-    color: Colors.text.white,
-  },
-  stepText: {
-    fontSize: Typography.sizes.caption,
-    fontWeight: '500' as const,
-    color: Colors.text.white,
-    opacity: 0.8,
-  },
-
-  // Clean Typography
+  // Dark MOVA Colors Typography
   title: {
-    fontSize: Typography.sizes.h2,
+    fontSize: Typography.sizes.h3 - 2, // Slightly smaller to fit better
     fontWeight: '700' as const,
-    color: Colors.text.white,
+    color: Colors.text.primary, // Dark MOVA color #0A2F35
     textAlign: 'center' as const,
     marginBottom: 12,
-    lineHeight: Typography.sizes.h2 + 4,
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3,
+    lineHeight: Typography.sizes.h3,
+    paddingHorizontal: 10,
   },
   description: {
-    fontSize: Typography.sizes.body,
+    fontSize: Typography.sizes.caption + 2, // Slightly bigger for readability
     fontWeight: '400' as const,
-    color: Colors.text.white,
+    color: Colors.primary.darkTeal, // Dark teal MOVA color #238276
     textAlign: 'center' as const,
-    lineHeight: Typography.sizes.body + 4,
-    opacity: 0.9,
-    paddingHorizontal: 12,
+    lineHeight: Typography.sizes.caption + 8, // Better line spacing
+    paddingHorizontal: 15,
   },
 });
