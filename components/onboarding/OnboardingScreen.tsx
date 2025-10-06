@@ -40,11 +40,11 @@ export default function OnboardingScreen() {
   };
 
   const getStarted = () => {
-    router.replace('/(tabs)');
+    router.push('/languageselection');
   };
 
   const skip = () => {
-    router.replace('/(tabs)');
+    router.push('/languageselection');
   };
 
   const isLastSlide = currentIndex === onboardingData.length - 1;
