@@ -23,11 +23,11 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
   const colorAnimation = useRef(new Animated.Value(0)).current;
 
   const handlePressIn = () => {
-    // Start sliding animation - much slower for better visual effect
+    // Start sliding animation - smooth for better visual effect
     Animated.parallel([
       Animated.timing(slideAnimation, {
         toValue: 1,
-        duration: 2000, // Much slower - 2 seconds for smooth sliding
+        duration: 2000, // 2 seconds for smooth sliding
         useNativeDriver: false,
       }),
       Animated.timing(colorAnimation, {
@@ -46,28 +46,28 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
     });
   };
 
-  // Arrow starts from left and slides to right - slower and smoother
+  // Arrow starts from left and slides to right
   const arrowTranslateX = slideAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: [0, width - 120], // Account for circular container size and padding
   });
 
-  // Background color: white -> dark teal (logo color)
+  // Background color: white -> teal
   const backgroundColor = colorAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#FFFFFF', Colors.text.primary], // White to dark logo color
+    outputRange: ['#FFFFFF', Colors.primary.teal],
   });
 
-  // Text color: dark (logo color) -> white
+  // Text color: teal -> white
   const textColor = colorAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: [Colors.text.primary, '#FFFFFF'], // Dark to white
+    outputRange: [Colors.primary.teal, '#FFFFFF'],
   });
 
-  // Border color to maintain button structure
+  // Border color
   const borderColor = colorAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: [Colors.text.primary, Colors.text.primary], // Always dark border
+    outputRange: [Colors.primary.teal, Colors.primary.teal],
   });
 
   return (
@@ -93,8 +93,8 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
             styles.arrowContainer,
             {
               transform: [{ translateX: arrowTranslateX }],
-              backgroundColor: '#FFFFFF', // White circular background
-              borderRadius: 20, // Make it circular
+              backgroundColor: '#FFFFFF',
+              borderRadius: 20,
               shadowColor: '#000',
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.1,
@@ -106,7 +106,7 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
           <Ionicons 
             name="arrow-forward" 
             size={20} 
-            color={Colors.text.primary} 
+            color={Colors.primary.teal} 
           />
         </Animated.View>
       </Animated.View>
@@ -142,11 +142,11 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     position: 'absolute',
-    left: 16, // Start from left side with some padding
+    left: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 40, // Larger circular container
+    width: 40,
     height: 40,
-    borderRadius: 20, // Perfect circle
+    borderRadius: 20,
   },
 });

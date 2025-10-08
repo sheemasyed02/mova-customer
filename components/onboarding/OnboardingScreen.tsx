@@ -7,14 +7,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React, { useRef, useState } from 'react';
 import {
-    Animated,
-    Dimensions,
-    FlatList,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Animated,
+  Dimensions,
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -51,19 +51,9 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-      
-      {/* Modern Skip Button */}
-      <TouchableOpacity style={styles.skipButton} onPress={skip}>
-        <LinearGradient
-          colors={['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.85)']}
-          style={styles.skipButtonContent}
-        >
-          <Text style={styles.skipText}>Skip</Text>
-        </LinearGradient>
-      </TouchableOpacity>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={false} />
 
-      {/* Slides Container */}
+      {/* Slides Container - Full Screen */}
       <View style={styles.slidesContainer}>
         <FlatList
           ref={slidesRef}
@@ -84,13 +74,13 @@ export default function OnboardingScreen() {
         />
       </View>
 
-      {/* Modern Bottom Section */}
+      {/* Clean Bottom Section with Better Design */}
       <View style={styles.bottomSection}>
         <LinearGradient
-          colors={['transparent', 'rgba(255, 255, 255, 0.98)', '#ffffff']}
+          colors={['transparent', 'rgba(255, 255, 255, 0.95)', '#ffffff']}
           style={styles.bottomGradient}
         >
-          {/* Progress Indicator - Only Circles */}
+          {/* Simple Progress Indicator */}
           <View style={styles.progressContainer}>
             <View style={styles.progressDotsContainer}>
               {onboardingData.map((_, index) => (
@@ -99,14 +89,16 @@ export default function OnboardingScreen() {
                   style={[
                     styles.progressDot,
                     currentIndex === index && styles.activeDot,
-                    { backgroundColor: currentIndex === index ? Colors.primary.teal : '#E5E7EB' }
+                    { 
+                      backgroundColor: currentIndex === index ? Colors.primary.teal : '#E5E7EB'
+                    }
                   ]}
                 />
               ))}
             </View>
           </View>
 
-          {/* Single Get Started Button with Animation */}
+          {/* Original Button with Scroll Functionality */}
           <View style={styles.buttonContainer}>
             <AnimatedButton
               title="Get Started"
@@ -131,51 +123,36 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
   },
-  skipButton: {
-    position: 'absolute' as const,
-    top: 60,
-    right: 20,
-    zIndex: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  skipButtonContent: {
-    borderRadius: 20,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  skipText: {
-    fontSize: Typography.sizes.body,
-    fontWeight: '600' as const,
-    color: Colors.text.primary,
-  },
+  
   slidesContainer: {
     flex: 1,
   },
+  
+  // Clean Bottom Section
   bottomSection: {
     backgroundColor: '#ffffff',
     paddingTop: 20,
     paddingBottom: 40,
   },
+  
   bottomGradient: {
     paddingHorizontal: 24,
     paddingTop: 20,
     paddingBottom: 20,
   },
+  
+  // Simple Progress Container
   progressContainer: {
     alignItems: 'center' as const,
-    marginBottom: 30, // Reduced margin since no text below
+    marginBottom: 30,
   },
+  
   progressDotsContainer: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
   },
+  
   progressDot: {
     width: 8,
     height: 8,
@@ -183,15 +160,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     backgroundColor: '#E5E7EB',
   },
+  
   activeDot: {
     width: 24,
     height: 8,
     borderRadius: 4,
     backgroundColor: Colors.primary.teal,
   },
+  
+  // Button Container
   buttonContainer: {
     alignItems: 'center' as const,
   },
+  
   getStartedButton: {
     width: '100%',
     marginBottom: 20,
@@ -201,15 +182,19 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
   },
+  
+  // Login Container
   loginContainer: {
     alignItems: 'center' as const,
     paddingVertical: 12,
   },
+  
   loginText: {
     fontSize: Typography.sizes.body,
     fontWeight: '400' as const,
     color: Colors.text.secondary,
   },
+  
   loginLink: {
     color: Colors.primary.teal,
     fontWeight: '600' as const,

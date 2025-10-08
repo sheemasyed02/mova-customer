@@ -1,6 +1,7 @@
 import { Colors } from '@/constants/Colors';
 import { OnboardingSlide } from '@/constants/OnboardingData';
 import { Typography } from '@/constants/Typography';
+import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
     Dimensions,
@@ -19,24 +20,24 @@ interface OnboardingSlideProps {
 export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps) {
   return (
     <View style={styles.container}>
-      {/* Full Screen Image Background */}
-      <View style={styles.imageBackground}>
+      {/* Full Screen Image - No Container Boxes */}
+      <View style={styles.imageWrapper}>
         <Image
           source={slide.image}
           style={styles.fullScreenImage}
           resizeMode="cover"
         />
         
-        {/* Dark Overlay for Text Visibility */}
-        <View style={styles.overlay} />
+        {/* Subtle Gradient Overlay for Text Readability */}
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.3)', 'rgba(0,0,0,0.6)']}
+          style={styles.gradientOverlay}
+        />
         
-        {/* Text Overlay on Image */}
-        <View style={styles.textOverlay}>
-          {/* Clean Title - White for visibility */}
-          <Text style={styles.title} numberOfLines={2}>{slide.title}</Text>
-          
-          {/* Clean Description - White for visibility */}
-          <Text style={styles.description} numberOfLines={3}>{slide.description}</Text>
+        {/* Content Positioned Over Image */}
+        <View style={styles.contentOverlay}>
+          <Text style={styles.title}>{slide.title}</Text>
+          <Text style={styles.description}>{slide.description}</Text>
         </View>
       </View>
     </View>
@@ -46,63 +47,64 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height - 180, // Adjusted for better full screen effect
+    height: height - 200, // Reduced to allow space for bottom section
   },
   
-  // Full Screen Image Background
-  imageBackground: {
+  // Full Screen Image Wrapper
+  imageWrapper: {
     flex: 1,
-    position: 'relative' as const,
+    position: 'relative',
   },
+  
   fullScreenImage: {
     width: '100%',
     height: '100%',
-    borderRadius: 0, // Remove border radius for full coverage
+    borderRadius: 0, // No rounded corners for full screen
   },
   
-  // Dark Overlay for Text Visibility
-  overlay: {
-    position: 'absolute' as const,
+  // Subtle Gradient Overlay
+  gradientOverlay: {
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent dark overlay
     zIndex: 1,
   },
   
-  // Text Overlay on Image
-  textOverlay: {
-    position: 'absolute' as const,
-    bottom: 40, // Position text at bottom of image
-    left: 20,
-    right: 20,
-    alignItems: 'center' as const,
+  // Content Overlay
+  contentOverlay: {
+    position: 'absolute',
+    bottom: 40,
+    left: 24,
+    right: 24,
     zIndex: 2,
+    alignItems: 'center',
   },
-
-  // White Typography for Visibility on Images
+  
   title: {
-    fontSize: Typography.sizes.h2, // Larger for better visibility
-    fontWeight: '700' as const,
-    color: Colors.text.white, // White for visibility on images
-    textAlign: 'center' as const,
-    marginBottom: 12,
-    lineHeight: Typography.sizes.h2 + 4,
-    paddingHorizontal: 10,
+    fontSize: Typography.sizes.h1,
+    fontWeight: '800',
+    color: Colors.text.white,
+    textAlign: 'center',
+    marginBottom: 16,
+    lineHeight: Typography.sizes.h1 + 4,
+    letterSpacing: -0.5,
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    textShadowRadius: 6,
   },
+  
   description: {
-    fontSize: Typography.sizes.body, // Larger for better readability
-    fontWeight: '400' as const,
-    color: Colors.text.white, // White for visibility on images
-    textAlign: 'center' as const,
-    lineHeight: Typography.sizes.body + 6,
-    paddingHorizontal: 15,
-    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    fontSize: Typography.sizes.body + 2,
+    fontWeight: '500',
+    color: Colors.text.white,
+    textAlign: 'center',
+    lineHeight: Typography.sizes.body + 8,
+    letterSpacing: 0.3,
+    opacity: 0.95,
+    textShadowColor: 'rgba(0, 0, 0, 0.7)',
     textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3,
+    textShadowRadius: 4,
   },
 });
