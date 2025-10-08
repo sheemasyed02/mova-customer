@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "MovaCustomer",
-    "slug": "MovaCustomer",
-    "version": "1.0.0",
+    "name": "MOVA Customer",
+    "slug": "mova-customer",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "movacustomer",

@@ -92,7 +92,7 @@ export default function OTPVerificationScreen() {
       console.log('OTP Verified:', otpCode);
       setIsVerifying(false);
       spinnerAnim.stopAnimation();
-      router.replace('/(tabs)');
+      router.push('/profile-setup' as any);
     }, 1500);
   };
 
