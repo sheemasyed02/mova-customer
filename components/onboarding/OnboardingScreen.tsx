@@ -1,6 +1,5 @@
 import OnboardingSlide from '@/components/onboarding/OnboardingSlide';
 import AnimatedButton from '@/components/ui/AnimatedButton';
-import { Colors } from '@/constants/Colors';
 import { onboardingData } from '@/constants/OnboardingData';
 import { Typography } from '@/constants/Typography';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -24,6 +23,8 @@ export default function OnboardingScreen() {
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef<FlatList>(null);
   const intervalRef = useRef<any>(null);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideUpAnim = useRef(new Animated.Value(50)).current;
 
   const viewableItemsChanged = useRef(({ viewableItems }: any) => {
     setCurrentIndex(viewableItems[0]?.index || 0);
@@ -31,7 +32,23 @@ export default function OnboardingScreen() {
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
-  // Auto-slide functionality
+  // Smooth entrance animations
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideUpAnim, {
+        toValue: 0,
+        duration: 1200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
+  // Auto-slide functionality with longer duration for reading
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       if (currentIndex < onboardingData.length - 1) {
@@ -40,13 +57,13 @@ export default function OnboardingScreen() {
           animated: true 
         });
       } else {
-        // Reset to first slide
+        // Reset to first slide for continuous loop
         slidesRef.current?.scrollToIndex({ 
           index: 0,
           animated: true 
         });
       }
-    }, 4000); // 4 seconds
+    }, 5000); // 5 seconds for better reading time
 
     return () => {
       if (intervalRef.current) {
@@ -64,30 +81,19 @@ export default function OnboardingScreen() {
     };
   }, []);
 
-  const goNext = () => {
-    if (currentIndex < onboardingData.length - 1) {
-      slidesRef.current?.scrollToIndex({ index: currentIndex + 1 });
-    } else {
-      // Navigate to main app
-      router.replace('/(tabs)');
-    }
-  };
-
   const getStarted = () => {
     router.push('/languageselection');
   };
 
-  const skip = () => {
-    router.push('/languageselection');
+  const goToSlide = (index: number) => {
+    slidesRef.current?.scrollToIndex({ index });
   };
-
-  const isLastSlide = currentIndex === onboardingData.length - 1;
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={false} />
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
 
-      {/* Slides Container - Controlled Height */}
+      {/* Full Screen Image Carousel */}
       <View style={styles.slidesContainer}>
         <FlatList
           ref={slidesRef}
@@ -104,51 +110,95 @@ export default function OnboardingScreen() {
           )}
           onViewableItemsChanged={viewableItemsChanged}
           viewabilityConfig={viewConfig}
-          scrollEventThrottle={32}
-          contentContainerStyle={styles.flatListContent}
+          scrollEventThrottle={16}
         />
       </View>
 
-      {/* Clean Bottom Section with Better Design */}
-      <View style={styles.bottomSection}>
-        <LinearGradient
-          colors={['transparent', 'rgba(255, 255, 255, 0.95)', '#ffffff']}
-          style={styles.bottomGradient}
-        >
-          {/* Simple Progress Indicator */}
-          <View style={styles.progressContainer}>
-            <View style={styles.progressDotsContainer}>
-              {onboardingData.map((_, index) => (
-                <View
-                  key={index}
+      {/* Elegant Progress Indicator */}
+      <Animated.View 
+        style={[
+          styles.progressSection,
+          {
+            opacity: fadeAnim,
+            transform: [{ translateY: slideUpAnim }]
+          }
+        ]}
+      >
+        <View style={styles.progressContainer}>
+          {onboardingData.map((_, index) => {
+            const inputRange = [
+              (index - 1) * width,
+              index * width,
+              (index + 1) * width,
+            ];
+
+            const dotWidth = scrollX.interpolate({
+              inputRange,
+              outputRange: [10, 40, 10],
+              extrapolate: 'clamp',
+            });
+
+            const opacity = scrollX.interpolate({
+              inputRange,
+              outputRange: [0.4, 1, 0.4],
+              extrapolate: 'clamp',
+            });
+
+            return (
+              <TouchableOpacity
+                key={index}
+                onPress={() => goToSlide(index)}
+                style={styles.dotContainer}
+              >
+                <Animated.View
                   style={[
                     styles.progressDot,
-                    currentIndex === index && styles.activeDot,
-                    { 
-                      backgroundColor: currentIndex === index ? Colors.primary.teal : '#E5E7EB'
-                    }
+                    {
+                      width: dotWidth,
+                      opacity,
+                    },
                   ]}
                 />
-              ))}
-            </View>
-          </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </Animated.View>
 
-          {/* Original Button with Scroll Functionality */}
-          <View style={styles.buttonContainer}>
+      {/* Bottom Action Section with Glassmorphism */}
+      <Animated.View 
+        style={[
+          styles.bottomSection,
+          {
+            opacity: fadeAnim,
+            transform: [{ translateY: slideUpAnim }]
+          }
+        ]}
+      >
+        <LinearGradient
+          colors={[
+            'rgba(255, 255, 255, 0.1)',
+            'rgba(255, 255, 255, 0.15)',
+            'rgba(255, 255, 255, 0.1)'
+          ]}
+          style={styles.bottomGradient}
+        >
+          <View style={styles.actionContainer}>
             <AnimatedButton
               title="Get Started"
               onPress={getStarted}
               style={styles.getStartedButton}
             />
             
-            <TouchableOpacity onPress={getStarted} style={styles.loginContainer}>
-              <Text style={styles.loginText}>
-                Already have an account? <Text style={styles.loginLink}>Sign In</Text>
+            <TouchableOpacity onPress={getStarted} style={styles.signInContainer}>
+              <Text style={styles.signInText}>
+                Already have an account?{' '}
+                <Text style={styles.signInLink}>Sign In</Text>
               </Text>
             </TouchableOpacity>
           </View>
         </LinearGradient>
-      </View>
+      </Animated.View>
     </View>
   );
 }
@@ -156,89 +206,96 @@ export default function OnboardingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#000',
   },
   
+  // Full Screen Slides
   slidesContainer: {
-    height: height * 0.75, // Match the slide height
-    paddingHorizontal: 16, // Add some padding for better visual
-  },
-
-  flatListContent: {
-    alignItems: 'center',
+    flex: 1,
   },
   
-  // Clean Bottom Section
-  bottomSection: {
-    flex: 1, // Take remaining space
-    backgroundColor: '#ffffff',
-    paddingTop: 20,
-    paddingBottom: 40,
+  // Progress Section
+  progressSection: {
+    position: 'absolute',
+    bottom: 200,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  
+  progressContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 25,
+  },
+  
+  dotContainer: {
+    marginHorizontal: 4,
+    height: 10,
     justifyContent: 'center',
   },
   
-  bottomGradient: {
-    paddingHorizontal: 24,
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-  
-  // Simple Progress Container
-  progressContainer: {
-    alignItems: 'center' as const,
-    marginBottom: 30,
-  },
-  
-  progressDotsContainer: {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
-    justifyContent: 'center' as const,
-  },
-  
   progressDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 4,
-    backgroundColor: '#E5E7EB',
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
   
-  activeDot: {
-    width: 24,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: Colors.primary.teal,
+  // Bottom Section
+  bottomSection: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 160,
+    zIndex: 10,
   },
   
-  // Button Container
-  buttonContainer: {
-    alignItems: 'center' as const,
+  bottomGradient: {
+    flex: 1,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingTop: 20,
+    paddingHorizontal: 24,
+    paddingBottom: 40,
+    backdropFilter: 'blur(20px)',
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  
+  // Action Container
+  actionContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   
   getStartedButton: {
     width: '100%',
-    marginBottom: 20,
-    shadowColor: Colors.primary.teal,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    marginBottom: 12,
   },
   
-  // Login Container
-  loginContainer: {
-    alignItems: 'center' as const,
-    paddingVertical: 12,
+  signInContainer: {
+    paddingVertical: 8,
   },
   
-  loginText: {
+  signInText: {
+    color: 'rgba(255, 255, 255, 0.8)',
     fontSize: Typography.sizes.body,
-    fontWeight: '400' as const,
-    color: Colors.text.secondary,
+    fontWeight: '400',
+    textAlign: 'center',
   },
   
-  loginLink: {
-    color: Colors.primary.teal,
-    fontWeight: '600' as const,
+  signInLink: {
+    color: '#ffffff',
+    fontWeight: '700',
+    textDecorationLine: 'underline',
   },
 });
