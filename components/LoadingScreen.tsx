@@ -28,7 +28,7 @@ export default function LoadingScreen() {
           <Image
             source={require('@/assets/images/icon.png')}
             style={styles.icon}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </View>
         
@@ -66,10 +66,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   icon: {
-    width: 120,
-    height: 120,
+    width: 160,
+    height: 160,
   },
   appName: {
     fontSize: Typography.sizes.h1 + 8,
