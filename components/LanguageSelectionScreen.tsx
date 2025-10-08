@@ -1,5 +1,4 @@
 import { Colors } from '@/constants/Colors';
-import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
@@ -27,9 +26,9 @@ interface Language {
 // Grid-style languages with native names and icons
 const languages: Language[] = [
   { id: '1', name: 'English', nativeName: 'English', code: 'en', icon: 'E' },
-  { id: '2', name: 'Hindi', nativeName: 'हिं', code: 'hi', icon: 'हि' },
-  { id: '3', name: 'Gujarati', nativeName: 'ગુ', code: 'gu', icon: 'ગુ' },
-  { id: '4', name: 'Marathi', nativeName: 'मरा', code: 'mr', icon: 'म' },
+  { id: '2', name: 'Hindi', nativeName: 'हिंदी', code: 'hi', icon: 'हि' },
+  { id: '3', name: 'Gujarati', nativeName: 'ગુજરાતી', code: 'gu', icon: 'ગુ' },
+  { id: '4', name: 'Marathi', nativeName: 'मराठी', code: 'mr', icon: 'म' },
   { id: '5', name: 'Telugu', nativeName: 'తెలుగు', code: 'te', icon: 'తె' },
   { id: '6', name: 'Tamil', nativeName: 'தமிழ்', code: 'ta', icon: 'த' },
   { id: '7', name: 'Kannada', nativeName: 'ಕನ್ನಡ', code: 'kn', icon: 'ಕ' },
@@ -134,11 +133,6 @@ export default function LanguageSelectionScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
       
-      {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name="chevron-back" size={24} color={Colors.text.primary} />
-      </TouchableOpacity>
-      
       {/* Header */}
       <Animated.View 
         style={[
@@ -156,7 +150,7 @@ export default function LanguageSelectionScreen() {
           },
         ]}
       >
-        <Text style={styles.title}>Select app language</Text>
+        <Text style={styles.title}>Choose your preferred language</Text>
       </Animated.View>
 
       {/* Language Grid */}
@@ -206,29 +200,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  backButton: {
-    position: 'absolute',
-    top: 50,
-    left: 20,
-    zIndex: 10,
-    padding: 8,
-  },
   header: {
     paddingHorizontal: 32,
-    paddingTop: 80,
-    paddingBottom: 30,
+    paddingTop: 50, // Much smaller - moved up significantly
+    paddingBottom: 15, // Reduced bottom padding
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#111827',
+    fontSize: 22,
+    fontWeight: '700',
+    color: Colors.primary.teal,
     textAlign: 'center',
+    letterSpacing: 0.3,
+    lineHeight: 28,
   },
   gridContainer: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 5, // Further reduced to bring grid closer to header
   },
   gridContent: {
     paddingBottom: 120,
@@ -281,7 +270,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   languageName: {
-    fontSize: 12,
+    fontSize: 11, // Reduced from 12 to prevent wrapping
     fontWeight: '600',
     color: '#374151',
     textAlign: 'center',
@@ -291,7 +280,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   nativeText: {
-    fontSize: 14,
+    fontSize: 12, // Reduced from 14 to prevent wrapping
     fontWeight: '500',
     color: '#6B7280',
     textAlign: 'center',
