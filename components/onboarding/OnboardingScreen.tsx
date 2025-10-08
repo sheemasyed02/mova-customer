@@ -5,7 +5,7 @@ import { onboardingData } from '@/constants/OnboardingData';
 import { Typography } from '@/constants/Typography';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
@@ -17,18 +17,52 @@ import {
   View
 } from 'react-native';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default function OnboardingScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef<FlatList>(null);
+  const intervalRef = useRef<any>(null);
 
   const viewableItemsChanged = useRef(({ viewableItems }: any) => {
     setCurrentIndex(viewableItems[0]?.index || 0);
   }).current;
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
+
+  // Auto-slide functionality
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      if (currentIndex < onboardingData.length - 1) {
+        slidesRef.current?.scrollToIndex({ 
+          index: currentIndex + 1,
+          animated: true 
+        });
+      } else {
+        // Reset to first slide
+        slidesRef.current?.scrollToIndex({ 
+          index: 0,
+          animated: true 
+        });
+      }
+    }, 4000); // 4 seconds
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [currentIndex]);
+
+  // Clear interval when component unmounts
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   const goNext = () => {
     if (currentIndex < onboardingData.length - 1) {
@@ -53,7 +87,7 @@ export default function OnboardingScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={false} />
 
-      {/* Slides Container - Full Screen */}
+      {/* Slides Container - Controlled Height */}
       <View style={styles.slidesContainer}>
         <FlatList
           ref={slidesRef}
@@ -71,6 +105,7 @@ export default function OnboardingScreen() {
           onViewableItemsChanged={viewableItemsChanged}
           viewabilityConfig={viewConfig}
           scrollEventThrottle={32}
+          contentContainerStyle={styles.flatListContent}
         />
       </View>
 
@@ -125,14 +160,21 @@ const styles = StyleSheet.create({
   },
   
   slidesContainer: {
-    flex: 1,
+    height: height * 0.75, // Match the slide height
+    paddingHorizontal: 16, // Add some padding for better visual
+  },
+
+  flatListContent: {
+    alignItems: 'center',
   },
   
   // Clean Bottom Section
   bottomSection: {
+    flex: 1, // Take remaining space
     backgroundColor: '#ffffff',
     paddingTop: 20,
     paddingBottom: 40,
+    justifyContent: 'center',
   },
   
   bottomGradient: {

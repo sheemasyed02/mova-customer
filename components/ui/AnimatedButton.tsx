@@ -1,14 +1,14 @@
 import { Colors } from '@/constants/Colors';
 import { Typography } from '@/constants/Typography';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
   PanResponder,
   StyleSheet,
-  View,
   ViewStyle
 } from 'react-native';
 
@@ -23,15 +23,41 @@ interface AnimatedButtonProps {
 export default function AnimatedButton({ title, onPress, style }: AnimatedButtonProps) {
   const slideAnimation = useRef(new Animated.Value(0)).current;
   const colorAnimation = useRef(new Animated.Value(0)).current;
+  const scaleAnimation = useRef(new Animated.Value(1)).current;
   const [isCompleted, setIsCompleted] = useState(false);
 
   const maxSlideDistance = width - 120; // Maximum distance the arrow can travel
 
+  // Reset function
+  const resetButton = useCallback(() => {
+    slideAnimation.setValue(0);
+    colorAnimation.setValue(0);
+    scaleAnimation.setValue(1);
+    setIsCompleted(false);
+  }, [slideAnimation, colorAnimation, scaleAnimation]);
+
+  // Reset animations when component mounts or remounts
+  useEffect(() => {
+    resetButton();
+  }, [resetButton]);
+
+  // Reset when screen comes into focus (when coming back from language screen)
+  useFocusEffect(
+    useCallback(() => {
+      resetButton();
+    }, [resetButton])
+  );
+
   const panResponder = PanResponder.create({
-    onMoveShouldSetPanResponder: () => true,
+    onMoveShouldSetPanResponder: () => !isCompleted,
     onPanResponderGrant: () => {
       // Haptic feedback when starting to drag
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      // Scale animation for press feedback
+      Animated.spring(scaleAnimation, {
+        toValue: 0.98,
+        useNativeDriver: true,
+      }).start();
     },
     onPanResponderMove: (_, gestureState) => {
       if (isCompleted) return;
@@ -44,6 +70,12 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
       colorAnimation.setValue(newValue);
     },
     onPanResponderRelease: (_, gestureState) => {
+      // Reset scale
+      Animated.spring(scaleAnimation, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
+
       const draggedDistance = gestureState.dx;
       const progress = draggedDistance / maxSlideDistance;
 
@@ -52,34 +84,33 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
         Animated.parallel([
           Animated.timing(slideAnimation, {
             toValue: 1,
-            duration: 300, // Fast completion
+            duration: 200, // Faster completion
             useNativeDriver: false,
           }),
           Animated.timing(colorAnimation, {
             toValue: 1,
-            duration: 300,
+            duration: 200,
             useNativeDriver: false,
           }),
         ]).start(() => {
           setIsCompleted(true);
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-          setTimeout(() => {
-            onPress();
-          }, 200);
+          // Immediate navigation - no delay
+          onPress();
         });
       } else {
         // Snap back to start
         Animated.parallel([
           Animated.spring(slideAnimation, {
             toValue: 0,
-            tension: 100,
-            friction: 8,
+            tension: 120,
+            friction: 7,
             useNativeDriver: false,
           }),
           Animated.spring(colorAnimation, {
             toValue: 0,
-            tension: 100,
-            friction: 8,
+            tension: 120,
+            friction: 7,
             useNativeDriver: false,
           }),
         ]).start();
@@ -112,7 +143,11 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
   });
 
   return (
-    <View style={[styles.container, style]}>
+    <Animated.View style={[
+      styles.container, 
+      style,
+      { transform: [{ scale: scaleAnimation }] }
+    ]}>
       <Animated.View style={[
         styles.button, 
         { 
@@ -132,23 +167,23 @@ export default function AnimatedButton({ title, onPress, style }: AnimatedButton
             {
               transform: [{ translateX: arrowTranslateX }],
               backgroundColor: '#FFFFFF',
-              borderRadius: 20,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 4,
-              elevation: 3,
+              borderRadius: 22, // More rounded
+              shadowColor: Colors.primary.teal,
+              shadowOffset: { width: 0, height: 3 },
+              shadowOpacity: 0.25,
+              shadowRadius: 6,
+              elevation: 6,
             }
           ]}
         >
           <Ionicons 
             name="arrow-forward" 
-            size={20} 
+            size={22} // Slightly larger
             color={Colors.primary.teal} 
           />
         </Animated.View>
       </Animated.View>
-    </View>
+    </Animated.View>
   );
 }
 
@@ -157,34 +192,35 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    borderRadius: 12,
-    paddingVertical: 16,
+    borderRadius: 16, // More rounded for modern look
+    paddingVertical: 18, // Slightly more padding
     paddingHorizontal: 32,
-    minHeight: 56,
+    minHeight: 64, // Taller for better touch
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
     overflow: 'hidden',
     shadowColor: Colors.primary.teal,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 10,
   },
   text: {
-    fontSize: Typography.sizes.bodyLarge,
-    fontWeight: '600',
+    fontSize: Typography.sizes.bodyLarge + 2, // Slightly larger
+    fontWeight: '700', // Bolder
     textAlign: 'center',
     flex: 1,
+    letterSpacing: 0.5, // Better spacing
   },
   arrowContainer: {
     position: 'absolute',
-    left: 16,
+    left: 18, // More space from edge
     alignItems: 'center',
     justifyContent: 'center',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 44, // Larger for better touch
+    height: 44,
+    borderRadius: 22,
   },
 });

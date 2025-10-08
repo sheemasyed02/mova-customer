@@ -47,10 +47,10 @@ export default function OnboardingSlideComponent({ slide }: OnboardingSlideProps
 const styles = StyleSheet.create({
   container: {
     width,
-    height: height - 200, // Reduced to allow space for bottom section
+    height: height * 0.75, // Reduced to 75% of screen height to leave space for bottom
   },
   
-  // Full Screen Image Wrapper
+  // Image Wrapper with controlled height
   imageWrapper: {
     flex: 1,
     position: 'relative',
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   fullScreenImage: {
     width: '100%',
     height: '100%',
-    borderRadius: 0, // No rounded corners for full screen
+    borderRadius: 16, // Slightly rounded for better design
   },
   
   // Subtle Gradient Overlay
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   // Content Overlay
   contentOverlay: {
     position: 'absolute',
-    bottom: 40,
+    bottom: 30, // Closer to image bottom since we have more space below
     left: 24,
     right: 24,
     zIndex: 2,
