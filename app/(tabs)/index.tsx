@@ -5,13 +5,14 @@ import React, { useState } from 'react';
 import {
   Dimensions,
   FlatList,
+  Image,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -35,7 +36,7 @@ interface Category {
   icon: string;
   count: number;
   startingPrice: number;
-  image: string;
+  image: any; // For require() imported images
 }
 
 interface Promotion {
@@ -89,7 +90,7 @@ export default function HomeScreen() {
       icon: '🚗',
       count: 156,
       startingPrice: 800,
-      image: '',
+      image: require('@/assets/categories/Economy_cars.png'),
     },
     {
       id: '2',
@@ -97,7 +98,7 @@ export default function HomeScreen() {
       icon: '🚙',
       count: 89,
       startingPrice: 1500,
-      image: '',
+      image: require('@/assets/categories/Premium_Sedans.png'),
     },
     {
       id: '3',
@@ -105,7 +106,7 @@ export default function HomeScreen() {
       icon: '🚐',
       count: 124,
       startingPrice: 2000,
-      image: '',
+      image: require('@/assets/categories/SUVs_MUVs.png'),
     },
     {
       id: '4',
@@ -113,7 +114,7 @@ export default function HomeScreen() {
       icon: '🚘',
       count: 45,
       startingPrice: 3500,
-      image: '',
+      image: require('@/assets/categories/Luxury_Cars.png'),
     },
     {
       id: '5',
@@ -121,7 +122,7 @@ export default function HomeScreen() {
       icon: '🏍️',
       count: 234,
       startingPrice: 300,
-      image: '',
+      image: require('@/assets/categories/Scooty.png'),
     },
     {
       id: '6',
@@ -129,7 +130,7 @@ export default function HomeScreen() {
       icon: '🔑',
       count: 178,
       startingPrice: 1000,
-      image: '',
+      image: require('@/assets/categories/Economy_cars.png'), // Using Economy_cars as fallback
     },
   ];
 
@@ -300,7 +301,7 @@ export default function HomeScreen() {
   const renderCategory = ({ item }: { item: Category }) => (
     <TouchableOpacity style={styles.categoryCard}>
       <View style={styles.categoryIcon}>
-        <Text style={styles.categoryEmoji}>{item.icon}</Text>
+        <Image source={item.image} style={styles.categoryImage} resizeMode="contain" />
       </View>
       <Text style={styles.categoryName}>{item.name}</Text>
       <Text style={styles.categoryCount}>{item.count} vehicles</Text>
@@ -650,6 +651,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  categoryImage: {
+    width: 35,
+    height: 35,
   },
   categoryEmoji: {
     fontSize: 24,

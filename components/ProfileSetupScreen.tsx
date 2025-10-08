@@ -697,11 +697,11 @@ export default function ProfileSetupScreen() {
 
   const renderStep3 = () => {
     const vehicleTypes = [
-      { id: 'hatchback', label: 'Hatchback', icon: '🚗' },
-      { id: 'sedan', label: 'Sedan', icon: '🚙' },
-      { id: 'suv', label: 'SUV', icon: '🚐' },
-      { id: 'luxury', label: 'Luxury', icon: '🚘' },
-      { id: 'bike', label: 'Bike', icon: '🏍️' },
+      { id: 'hatchback', label: 'Hatchback', icon: '🚗', image: require('@/assets/categories/Economy_cars.png') },
+      { id: 'sedan', label: 'Sedan', icon: '🚙', image: require('@/assets/categories/Premium_Sedans.png') },
+      { id: 'suv', label: 'SUV', icon: '🚐', image: require('@/assets/categories/SUVs_MUVs.png') },
+      { id: 'luxury', label: 'Luxury', icon: '🚘', image: require('@/assets/categories/Luxury_Cars.png') },
+      { id: 'bike', label: 'Bike', icon: '🏍️', image: require('@/assets/categories/Scooty.png') },
     ];
 
     const usageTypes = [
@@ -735,7 +735,7 @@ export default function ProfileSetupScreen() {
                   updateProfileData({ favoriteVehicleTypes: newTypes });
                 }}
               >
-                <Text style={styles.vehicleIcon}>{vehicle.icon}</Text>
+                <Image source={vehicle.image} style={styles.vehicleImage} resizeMode="contain" />
                 <Text style={[
                   styles.vehicleText,
                   profileData.favoriteVehicleTypes.includes(vehicle.id) && styles.vehicleTextSelected
@@ -1229,6 +1229,11 @@ const styles = StyleSheet.create({
   },
   vehicleIcon: {
     fontSize: 24,
+    marginBottom: 4,
+  },
+  vehicleImage: {
+    width: 32,
+    height: 32,
     marginBottom: 4,
   },
   vehicleText: {
