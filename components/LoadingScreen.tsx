@@ -2,13 +2,13 @@ import { Colors } from '@/constants/Colors';
 import { Typography } from '@/constants/Typography';
 import React from 'react';
 import {
-    ActivityIndicator,
-    Dimensions,
-    Image,
-    StatusBar,
-    StyleSheet,
-    Text,
-    View,
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -28,7 +28,7 @@ export default function LoadingScreen() {
           <Image
             source={require('@/assets/images/icon.png')}
             style={styles.icon}
-            resizeMode="cover"
+            resizeMode="contain"
           />
         </View>
         
