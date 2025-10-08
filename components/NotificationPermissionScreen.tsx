@@ -6,15 +6,15 @@ import * as Notifications from 'expo-notifications';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Alert,
-    Animated,
-    Dimensions,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Alert,
+  Animated,
+  Dimensions,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -42,7 +42,7 @@ export default function NotificationPermissionScreen() {
         Alert.alert(
           'Notifications Enabled!',
           'You\'ll now receive important updates about your bookings.',
-          [{ text: 'Continue', onPress: () => router.push('/login' as any) }]
+          [{ text: 'Continue', onPress: () => router.push('/(tabs)' as any) }]
         );
       } else {
         // Permission denied
@@ -51,7 +51,7 @@ export default function NotificationPermissionScreen() {
           'You can enable notifications later in settings to stay updated.',
           [
             { text: 'Try Again', onPress: () => requestNotificationPermission() },
-            { text: 'Continue', onPress: () => router.push('/login' as any) },
+            { text: 'Continue', onPress: () => router.push('/(tabs)' as any) },
           ]
         );
       }
@@ -67,7 +67,7 @@ export default function NotificationPermissionScreen() {
   };
 
   const skipPermission = () => {
-    router.push('/login' as any);
+    router.push('/(tabs)' as any);
   };
 
   const benefits = [
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 20,
-    paddingTop: 60,
+    paddingTop: 80,
     paddingBottom: 40,
   },
   illustrationContainer: {

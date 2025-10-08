@@ -59,6 +59,9 @@ function RootLayoutNav() {
         <Stack.Screen name="languageselection" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="otp-verification" options={{ headerShown: false }} />
+        <Stack.Screen name="profile-setup" options={{ headerShown: false }} />
+        <Stack.Screen name="home-permission" options={{ headerShown: false }} />
+        <Stack.Screen name="notification-permission" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
