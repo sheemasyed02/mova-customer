@@ -4,13 +4,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Dimensions,
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -45,8 +45,8 @@ export default function LanguageSelectionScreen() {
 
   const handleContinue = () => {
     // Store selected language in local storage or context
-    // For now, navigate to main app
-    router.replace('/(tabs)');
+    // Navigate to login screen
+    router.push('/login');
   };
 
   const renderLanguageItem = ({ item }: { item: Language }) => (
