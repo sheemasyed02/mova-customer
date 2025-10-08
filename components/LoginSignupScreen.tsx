@@ -24,9 +24,12 @@ export default function LoginSignupScreen() {
   const [phoneNumber, setPhoneNumber] = useState('');
 
   const handlePhoneLogin = () => {
-    // Navigate to OTP verification or main app
+    // Navigate to OTP verification screen with phone number
     console.log('Phone login with:', '+91' + phoneNumber);
-    router.replace('/(tabs)');
+    router.push({
+      pathname: '/otp-verification',
+      params: { phoneNumber: '+91 ' + phoneNumber }
+    });
   };
 
   const handleGoogleLogin = () => {
@@ -196,43 +199,43 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 20,
-    paddingBottom: 40,
+    paddingTop: 10,
+    paddingBottom: 30,
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 30,
+    marginTop: 10,
+    marginBottom: 20,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
   welcomeSection: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 30,
   },
   welcomeTitle: {
-    fontSize: Typography.sizes.h1,
+    fontSize: Typography.sizes.h2,
     fontWeight: '700',
     color: Colors.text.primary,
-    marginBottom: 8,
+    marginBottom: 6,
     letterSpacing: 0.5,
   },
   welcomeSubtext: {
-    fontSize: Typography.sizes.bodyLarge,
+    fontSize: Typography.sizes.body,
     fontWeight: '400',
     color: Colors.text.secondary,
     textAlign: 'center',
   },
   authSection: {
-    marginBottom: 30,
+    marginBottom: 25,
   },
   sectionTitle: {
-    fontSize: Typography.sizes.h3,
+    fontSize: Typography.sizes.bodyLarge,
     fontWeight: '600',
     color: Colors.text.primary,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   phoneInputContainer: {
     flexDirection: 'row',
@@ -241,7 +244,7 @@ const styles = StyleSheet.create({
     borderColor: '#E5E7EB',
     borderRadius: 12,
     backgroundColor: '#ffffff',
-    marginBottom: 20,
+    marginBottom: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -251,25 +254,25 @@ const styles = StyleSheet.create({
   countryCodeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 14,
     borderRightWidth: 1,
     borderRightColor: '#E5E7EB',
   },
   flagEmoji: {
-    fontSize: 20,
-    marginRight: 8,
+    fontSize: 18,
+    marginRight: 6,
   },
   countryCode: {
-    fontSize: Typography.sizes.bodyLarge,
+    fontSize: Typography.sizes.body,
     fontWeight: '600',
     color: Colors.text.primary,
   },
   phoneInput: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    fontSize: Typography.sizes.bodyLarge,
+    paddingHorizontal: 12,
+    paddingVertical: 14,
+    fontSize: Typography.sizes.body,
     color: Colors.text.primary,
   },
   primaryButton: {
@@ -285,13 +288,13 @@ const styles = StyleSheet.create({
   },
   primaryButtonGradient: {
     borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingVertical: 14,
+    paddingHorizontal: 28,
     alignItems: 'center',
     justifyContent: 'center',
   },
   primaryButtonText: {
-    fontSize: Typography.sizes.bodyLarge,
+    fontSize: Typography.sizes.body,
     fontWeight: '600',
     color: '#ffffff',
     textAlign: 'center',
@@ -302,7 +305,7 @@ const styles = StyleSheet.create({
   dividerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 30,
+    marginVertical: 20,
   },
   dividerLine: {
     flex: 1,
@@ -316,14 +319,14 @@ const styles = StyleSheet.create({
     color: Colors.text.secondary,
   },
   socialSection: {
-    marginBottom: 30,
+    marginBottom: 20,
   },
   socialButton: {
     borderWidth: 2,
     borderColor: '#E5E7EB',
     borderRadius: 12,
     backgroundColor: '#ffffff',
-    marginBottom: 12,
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -334,8 +337,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   socialIcon: {
     width: 24,
@@ -371,14 +374,14 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   socialButtonText: {
-    fontSize: Typography.sizes.bodyLarge,
+    fontSize: Typography.sizes.body,
     fontWeight: '600',
     color: Colors.text.primary,
   },
   termsContainer: {
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginTop: 20,
+    paddingHorizontal: 16,
+    marginTop: 15,
   },
   termsText: {
     fontSize: Typography.sizes.caption,
