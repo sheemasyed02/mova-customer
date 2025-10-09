@@ -89,13 +89,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="bookings"
         options={{
-          title: 'Profile',
+          title: 'Bookings',
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon 
-              name={focused ? "person" : "person-outline"} 
+              name={focused ? "calendar" : "calendar-outline"} 
               color={color} 
             />
           ),
