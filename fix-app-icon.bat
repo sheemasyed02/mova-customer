@@ -3,23 +3,23 @@ echo Fixing MOVA App Icon Issue...
 echo.
 
 REM Ensure we have the MOVA logo
-if exist "assets\images\Mova1.jpg" (
+if exist "assets\images\movalogo.png" (
     echo Found MOVA logo source file
     
     REM Create proper icon.png (1024x1024 recommended)
-    copy "assets\images\Mova1.jpg" "assets\images\icon.png" >nul
+    copy "assets\images\movalogo.png" "assets\images\icon.png" >nul
     echo ✓ Updated icon.png (Main app icon)
     
     REM Create adaptive icon for Android
-    copy "assets\images\Mova1.jpg" "assets\images\adaptive-icon.png" >nul
+    copy "assets\images\movalogo.png" "assets\images\adaptive-icon.png" >nul
     echo ✓ Updated adaptive-icon.png (Android adaptive icon)
     
     REM Create favicon for web
-    copy "assets\images\Mova1.jpg" "assets\images\favicon.png" >nul
+    copy "assets\images\movalogo.png" "assets\images\favicon.png" >nul
     echo ✓ Updated favicon.png (Web browser icon)
     
     REM Create splash icon
-    copy "assets\images\Mova1.jpg" "assets\images\splash-icon.png" >nul
+    copy "assets\images\movalogo.png" "assets\images\splash-icon.png" >nul
     echo ✓ Updated splash-icon.png (Splash screen icon)
     
     echo.
@@ -36,7 +36,7 @@ if exist "assets\images\Mova1.jpg" (
     
 ) else (
     echo ERROR: MOVA logo file not found!
-    echo Please ensure 'Mova1.jpg' exists in assets/images/
+    echo Please ensure 'movalogo.png' exists in assets/images/
 )
 
 echo.
