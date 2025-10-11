@@ -62,6 +62,9 @@ function RootLayoutNav() {
         <Stack.Screen name="profile-setup" options={{ headerShown: false }} />
         <Stack.Screen name="home-permission" options={{ headerShown: false }} />
         <Stack.Screen name="notification-permission" options={{ headerShown: false }} />
+        <Stack.Screen name="vehicle-inspection" options={{ headerShown: false }} />
+        <Stack.Screen name="my-trips" options={{ headerShown: false }} />
+        <Stack.Screen name="trip-details" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />

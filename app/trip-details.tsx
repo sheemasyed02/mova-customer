@@ -4,17 +4,17 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -634,6 +634,7 @@ export default function TripDetailsScreen() {
         case 'upcoming':
           return [
             { icon: 'document-text', text: 'Upload Documents', color: Colors.primary.teal },
+            { icon: 'camera', text: 'Pre-trip Inspection', color: Colors.primary.teal },
             { icon: 'call', text: 'Contact Owner', color: Colors.primary.teal },
             { icon: 'navigate', text: 'Get Directions', color: Colors.primary.teal },
             { icon: 'create', text: 'Modify Booking', color: Colors.text.secondary },
@@ -649,6 +650,7 @@ export default function TripDetailsScreen() {
         case 'completed':
           return [
             { icon: 'star', text: 'Rate & Review', color: Colors.primary.teal },
+            { icon: 'camera', text: 'View Inspections', color: Colors.text.secondary },
             { icon: 'receipt', text: 'View Invoice', color: Colors.text.secondary },
             { icon: 'cash', text: 'Deposit Status', color: Colors.text.secondary },
             { icon: 'refresh', text: 'Book Again', color: Colors.primary.teal },
@@ -671,6 +673,10 @@ export default function TripDetailsScreen() {
                 onPress={() => {
                   if (button.text === 'Cancel Booking') {
                     setShowCancelModal(true);
+                  } else if (button.text === 'Pre-trip Inspection') {
+                    router.push('/vehicle-inspection');
+                  } else if (button.text === 'View Inspections') {
+                    router.push('/vehicle-inspection');
                   }
                 }}
               >
