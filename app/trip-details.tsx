@@ -677,6 +677,8 @@ export default function TripDetailsScreen() {
                     router.push('/vehicle-inspection');
                   } else if (button.text === 'View Inspections') {
                     router.push('/vehicle-inspection');
+                  } else if (button.text === 'Extend Booking') {
+                    router.push('/extend-booking' as any);
                   }
                 }}
               >

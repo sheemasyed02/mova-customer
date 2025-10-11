@@ -379,7 +379,7 @@ export default function MyTripsScreen() {
           <TouchableOpacity key="issue" style={styles.actionButton}>
             <Text style={styles.actionButtonText}>Report Issue</Text>
           </TouchableOpacity>,
-          <TouchableOpacity key="extend" style={styles.actionButton}>
+          <TouchableOpacity key="extend" style={styles.actionButton} onPress={() => router.push('/extend-booking' as any)}>
             <Text style={styles.actionButtonText}>Extend Booking</Text>
           </TouchableOpacity>,
           <TouchableOpacity key="support" style={[styles.actionButton, styles.emergencyButton]}>
