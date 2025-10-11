@@ -4,17 +4,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    Image,
-    Modal,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  FlatList,
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -195,8 +194,6 @@ export default function MyTripsScreen() {
 
   const renderHeader = () => (
     <View style={styles.header}>
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      
       <View style={styles.headerTop}>
         <View style={styles.headerSpacer} />
         
@@ -576,7 +573,7 @@ export default function MyTripsScreen() {
   const filteredTrips = getFilteredTrips();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       {renderHeader()}
       {renderTabs()}
       
@@ -593,7 +590,7 @@ export default function MyTripsScreen() {
       )}
       
       {renderFilterModal()}
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -605,7 +602,8 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: Colors.background.white,
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingTop: 8,
+    paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },

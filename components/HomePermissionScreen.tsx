@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
@@ -201,7 +202,7 @@ export default function HomePermissionScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       
       {/* Background Gradient */}
@@ -332,7 +333,7 @@ export default function HomePermissionScreen() {
           </View>
         </Animated.View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -351,12 +352,12 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: 20,
-    paddingTop: 80,
+    paddingTop: 20,
     paddingBottom: 40,
   },
   illustrationContainer: {
-    height: height * 0.35,
-    marginBottom: 40,
+    height: height * 0.3,
+    marginBottom: 30,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -531,7 +532,7 @@ const styles = StyleSheet.create({
   },
   headerSection: {
     alignItems: 'center',
-    marginBottom: 35,
+    marginBottom: 25,
   },
   heading: {
     fontSize: Typography.sizes.h1,
@@ -549,12 +550,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   benefitsSection: {
-    marginBottom: 35,
+    marginBottom: 25,
   },
   benefitItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
     paddingHorizontal: 5,
   },
   benefitIconContainer: {
