@@ -1,29 +1,3 @@
-/**
- * EXTEND BOOKING SCREEN
- * 
- * Navigation Routes:
- * - From Trip Details Screen: "Extend Booking" button → /extend-booking
- * - From My Trips Screen: "Extend Booking" button (ongoing trips) → /extend-booking
- * - From Notification: Deep link → /extend-booking?bookingId=MOV-12345
- * - From QuickExtendButton Component: Any screen → /extend-booking
- * 
- * Functionality:
- * - Add more time to ongoing booking
- * - Real-time availability checking
- * - Dynamic pricing calculation
- * - Owner approval workflow
- * - Integrated payment system
- * - Multiple extension support (up to 30 days total)
- * 
- * Key Features:
- * - Date/Time picker with validation
- * - Availability status with alternative dates
- * - Detailed cost breakdown with GST
- * - Instant vs Manual approval flow
- * - Payment method selection
- * - Success confirmation with updated booking details
- */
-
 import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -31,16 +5,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-    ActivityIndicator,
-    Alert,
-    Dimensions,
-    Modal,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Alert,
+  Dimensions,
+  Modal,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -96,9 +70,10 @@ export default function ExtendBookingScreen() {
   const currentEndDateTime = new Date('2025-01-17T10:00:00');
   
   useEffect(() => {
-    // Set initial date to current end date + 1 day
+    // Set initial date to match example: current end date + 2 days + 5 hours
     const initialDate = new Date(currentEndDateTime);
-    initialDate.setDate(initialDate.getDate() + 1);
+    initialDate.setDate(initialDate.getDate() + 2);
+    initialDate.setHours(initialDate.getHours() + 5);
     setSelectedDate(initialDate);
     setSelectedTime(initialDate);
   }, []);
