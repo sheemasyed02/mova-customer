@@ -685,12 +685,6 @@ export default function ProfileSetupScreen() {
             </View>
           </View>
         </View>
-
-        {/* Map placeholder */}
-        <View style={styles.mapPlaceholder}>
-          <Ionicons name="map" size={32} color={Colors.text.secondary} />
-          <Text style={styles.mapPlaceholderText}>Map showing selected location</Text>
-        </View>
       </View>
     );
   };
@@ -785,83 +779,82 @@ export default function ProfileSetupScreen() {
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
 
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={styles.safeArea} edges={['top']}>
+        {/* Compact Header */}
+        <View style={styles.header}>
+          <View style={styles.headerContent}>
+            <Text style={styles.stepIndicator}>Step {currentStep} of 3</Text>
+            <Text style={styles.title}>{getStepTitle()}</Text>
+            <Text style={styles.subtitle}>{getStepSubtitle()}</Text>
+          </View>
+          {renderProgressBar()}
+        </View>
+
+        {/* Scrollable Content */}
         <ScrollView 
           style={styles.mainScrollView}
           contentContainerStyle={styles.mainScrollContent}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          {/* Clean Header without navigation */}
-          <View style={styles.header}>
-            <View style={styles.headerContent}>
-              <Text style={styles.stepIndicator}>Step {currentStep} of 3</Text>
-              <Text style={styles.title}>{getStepTitle()}</Text>
-              <Text style={styles.subtitle}>{getStepSubtitle()}</Text>
-            </View>
-
-            {renderProgressBar()}
-          </View>
-
-          {/* Step Content */}
           <View style={styles.stepContentContainer}>
             {renderStep()}
           </View>
+        </ScrollView>
 
-          {/* Action Buttons - Inside ScrollView */}
-          <View style={styles.actionSection}>
-            <TouchableOpacity
-              style={[
-                styles.nextButton,
-                (currentStep === 1 && !isStep1Valid()) && styles.nextButtonDisabled,
-                (currentStep === 2 && !isStep2Valid()) && styles.nextButtonDisabled,
-              ]}
-              onPress={handleNext}
-              disabled={
-                (currentStep === 1 && !isStep1Valid()) ||
-                (currentStep === 2 && !isStep2Valid())
+        {/* Fixed Bottom Actions */}
+        <View style={styles.bottomActions}>
+          <TouchableOpacity
+            style={[
+              styles.nextButton,
+              (currentStep === 1 && !isStep1Valid()) && styles.nextButtonDisabled,
+              (currentStep === 2 && !isStep2Valid()) && styles.nextButtonDisabled,
+            ]}
+            onPress={handleNext}
+            disabled={
+              (currentStep === 1 && !isStep1Valid()) ||
+              (currentStep === 2 && !isStep2Valid())
+            }
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={
+                (currentStep === 1 && isStep1Valid()) ||
+                (currentStep === 2 && isStep2Valid()) ||
+                currentStep === 3
+                  ? [Colors.primary.teal, Colors.accent.blue]
+                  : ['#E5E7EB', '#D1D5DB']
               }
-              activeOpacity={0.8}
+              style={styles.nextButtonGradient}
             >
-              <LinearGradient
-                colors={
+              <Text style={[
+                styles.nextButtonText,
+                ((currentStep === 1 && !isStep1Valid()) || 
+                 (currentStep === 2 && !isStep2Valid())) && styles.nextButtonTextDisabled
+              ]}>
+                {currentStep === 3 ? 'Finish Setup' : 'Next'}
+              </Text>
+              <Ionicons 
+                name="arrow-forward" 
+                size={16} 
+                color={
                   (currentStep === 1 && isStep1Valid()) ||
                   (currentStep === 2 && isStep2Valid()) ||
                   currentStep === 3
-                    ? [Colors.primary.teal, Colors.accent.blue]
-                    : ['#E5E7EB', '#D1D5DB']
+                    ? "#ffffff"
+                    : "#9CA3AF"
                 }
-                style={styles.nextButtonGradient}
-              >
-                <Text style={[
-                  styles.nextButtonText,
-                  ((currentStep === 1 && !isStep1Valid()) || 
-                   (currentStep === 2 && !isStep2Valid())) && styles.nextButtonTextDisabled
-                ]}>
-                  {currentStep === 3 ? 'Finish Setup' : 'Next'}
-                </Text>
-                <Ionicons 
-                  name="arrow-forward" 
-                  size={16} 
-                  color={
-                    (currentStep === 1 && isStep1Valid()) ||
-                    (currentStep === 2 && isStep2Valid()) ||
-                    currentStep === 3
-                      ? "#ffffff"
-                      : "#9CA3AF"
-                  }
-                  style={styles.nextIcon} 
-                />
-              </LinearGradient>
-            </TouchableOpacity>
+                style={styles.nextIcon} 
+              />
+            </LinearGradient>
+          </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
-              <Text style={styles.skipText}>
-                {currentStep === 1 ? 'Skip for now' : 'Skip'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+          <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
+            <Text style={styles.skipText}>
+              {currentStep === 1 ? 'Skip for now' : 'Skip'}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
 
       {/* Custom Date Picker */}
@@ -896,10 +889,10 @@ const styles = StyleSheet.create({
   mainScrollContent: {
     flexGrow: 1,
     paddingHorizontal: 20,
+    paddingVertical: 20,
   },
   stepContentContainer: {
     flex: 1,
-    marginBottom: 20,
   },
   contentWrapper: {
     flex: 1,
@@ -919,8 +912,12 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   header: {
-    paddingTop: 40,
-    paddingBottom: 20,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 15,
+    backgroundColor: '#ffffff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
   },
   backButton: {
     position: 'absolute',
@@ -943,18 +940,18 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: Colors.primary.teal,
-    marginBottom: 6,
+    color: Colors.text.primary,
+    marginBottom: 4,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 14,
     color: Colors.text.secondary,
     textAlign: 'center',
-    lineHeight: 20,
-    marginBottom: 15,
+    lineHeight: 18,
+    marginBottom: 8,
   },
   progressContainer: {
     flexDirection: 'row',
@@ -1000,7 +997,7 @@ const styles = StyleSheet.create({
   },
   photoSection: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
   },
   photoContainer: {
     position: 'relative',
@@ -1064,10 +1061,10 @@ const styles = StyleSheet.create({
     color: Colors.text.secondary,
   },
   formSection: {
-    gap: 12,
+    gap: 16,
   },
   inputGroup: {
-    gap: 4,
+    gap: 6,
   },
   label: {
     fontSize: 13,
@@ -1277,6 +1274,15 @@ const styles = StyleSheet.create({
   actionSection: {
     paddingVertical: 15,
     paddingBottom: 30,
+    gap: 12,
+  },
+  bottomActions: {
+    backgroundColor: '#ffffff',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#F3F4F6',
     gap: 12,
   },
   nextButton: {
