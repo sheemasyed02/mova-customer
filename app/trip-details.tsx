@@ -4,17 +4,17 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Dimensions,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Dimensions,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -679,6 +679,8 @@ export default function TripDetailsScreen() {
                     router.push('/vehicle-inspection');
                   } else if (button.text === 'Extend Booking') {
                     router.push('/extend-booking' as any);
+                  } else if (button.text === 'Report Issue') {
+                    router.push('/report-issue' as any);
                   }
                 }}
               >

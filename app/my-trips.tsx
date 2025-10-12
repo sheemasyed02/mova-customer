@@ -4,16 +4,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Dimensions,
-  FlatList,
-  Image,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
+    Dimensions,
+    FlatList,
+    Image,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -376,7 +376,7 @@ export default function MyTripsScreen() {
           <TouchableOpacity key="location" style={styles.actionButton}>
             <Text style={styles.actionButtonText}>View Location</Text>
           </TouchableOpacity>,
-          <TouchableOpacity key="issue" style={styles.actionButton}>
+          <TouchableOpacity key="issue" style={styles.actionButton} onPress={() => router.push('/report-issue' as any)}>
             <Text style={styles.actionButtonText}>Report Issue</Text>
           </TouchableOpacity>,
           <TouchableOpacity key="extend" style={styles.actionButton} onPress={() => router.push('/extend-booking' as any)}>
