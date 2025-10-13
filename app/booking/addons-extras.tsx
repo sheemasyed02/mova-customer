@@ -1,4 +1,6 @@
 import { Colors } from '@/constants/Colors';
+import { useScrollContext } from '@/contexts/ScrollContext';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
@@ -46,6 +48,22 @@ interface Props {
 
 export default function AddonsExtras({ bookingData, updateBookingData, onNext, onBack }: Props) {
   const [deliveryAddress, setDeliveryAddress] = useState('');
+
+  // Scroll detection for animated tab bar
+  const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
+  const { updateScrollDirection } = useScrollContext();
+  
+  // Update scroll context when scroll direction changes
+  React.useEffect(() => {
+    updateScrollDirection(scrollDirection);
+  }, [scrollDirection, updateScrollDirection]);
+
+  // Cleanup on unmount
+  React.useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, [cleanup]);
 
   const calculateAddonsTotal = () => {
     let total = 0;
@@ -320,6 +338,8 @@ export default function AddonsExtras({ bookingData, updateBookingData, onNext, o
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
       >
         {renderCompactVehicleSummary()}
         {renderDeliveryOptions()}

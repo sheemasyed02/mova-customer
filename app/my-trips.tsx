@@ -1,19 +1,21 @@
 import { Colors } from '@/constants/Colors';
+import { useScrollContext } from '@/contexts/ScrollContext';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    Image,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  Dimensions,
+  FlatList,
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -54,6 +56,22 @@ export default function MyTripsScreen() {
   const [selectedPriceRange, setSelectedPriceRange] = useState('all');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
+  
+  // Scroll detection for animated tab bar
+  const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
+  const { updateScrollDirection } = useScrollContext();
+  
+  // Update scroll context when scroll direction changes
+  React.useEffect(() => {
+    updateScrollDirection(scrollDirection);
+  }, [scrollDirection, updateScrollDirection]);
+
+  // Cleanup on unmount
+  React.useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, [cleanup]);
 
   // Sample data - replace with actual API data
   const sampleTrips: TripData[] = [
@@ -584,6 +602,8 @@ export default function MyTripsScreen() {
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContainer}
           showsVerticalScrollIndicator={false}
+          onScroll={onScroll}
+          scrollEventThrottle={16}
         />
       ) : (
         renderEmptyState()
@@ -698,6 +718,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     padding: 20,
+    paddingBottom: 100, // Extra space for tab bar
     gap: 16,
   },
   tripCard: {

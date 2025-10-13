@@ -1,4 +1,6 @@
 import { Colors } from '@/constants/Colors';
+import { useScrollContext } from '@/contexts/ScrollContext';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
@@ -61,6 +63,22 @@ export default function DateTimeSelection({ bookingData, updateBookingData, onNe
   const [showReturnTime, setShowReturnTime] = useState(false);
   const [sameLocation, setSameLocation] = useState(true);
   const [estimatedKm, setEstimatedKm] = useState('600');
+
+  // Scroll detection for animated tab bar
+  const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
+  const { updateScrollDirection } = useScrollContext();
+  
+  // Update scroll context when scroll direction changes
+  React.useEffect(() => {
+    updateScrollDirection(scrollDirection);
+  }, [scrollDirection, updateScrollDirection]);
+
+  // Cleanup on unmount
+  React.useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, [cleanup]);
 
   // Generate time slots
   const generateTimeSlots = () => {
@@ -469,6 +487,8 @@ export default function DateTimeSelection({ bookingData, updateBookingData, onNe
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
       >
         {renderVehicleSummary()}
         {renderPickupDetails()}

@@ -1,4 +1,6 @@
 import { Colors } from '@/constants/Colors';
+import { useScrollContext } from '@/contexts/ScrollContext';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
@@ -52,6 +54,22 @@ export default function HomeScreen() {
   const [searchText, setSearchText] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All Cars');
   const [currentPromoIndex, setCurrentPromoIndex] = useState(0);
+  
+  // Scroll detection for animated tab bar
+  const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
+  const { updateScrollDirection } = useScrollContext();
+  
+  // Update scroll context when scroll direction changes
+  React.useEffect(() => {
+    updateScrollDirection(scrollDirection);
+  }, [scrollDirection, updateScrollDirection]);
+
+  // Cleanup on unmount
+  React.useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, [cleanup]);
 
   // Sample data - replace with API calls
   const promotions: Promotion[] = [
@@ -422,6 +440,8 @@ export default function HomeScreen() {
         style={styles.scrollView} 
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
       >
         {renderSearchBar()}
         {renderFilters()}
@@ -505,7 +525,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 20,
+    paddingBottom: 100, // Extra space for tab bar
   },
   searchSection: {
     paddingHorizontal: 20,

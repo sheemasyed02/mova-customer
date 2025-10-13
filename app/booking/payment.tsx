@@ -1,4 +1,6 @@
 import { Colors } from '@/constants/Colors';
+import { useScrollContext } from '@/contexts/ScrollContext';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
@@ -42,6 +44,22 @@ export default function Payment({ bookingData, updateBookingData, onNext, onBack
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('card');
   const [expandedSummary, setExpandedSummary] = useState(false);
   const [processing, setProcessing] = useState(false);
+  
+  // Scroll detection for animated tab bar
+  const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
+  const { updateScrollDirection } = useScrollContext();
+  
+  // Update scroll context when scroll direction changes
+  React.useEffect(() => {
+    updateScrollDirection(scrollDirection);
+  }, [scrollDirection, updateScrollDirection]);
+
+  // Cleanup on unmount
+  React.useEffect(() => {
+    return () => {
+      cleanup();
+    };
+  }, [cleanup]);
   
   // Card form state
   const [cardNumber, setCardNumber] = useState('');
@@ -429,6 +447,8 @@ export default function Payment({ bookingData, updateBookingData, onNext, onBack
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
       >
         {renderBookingSummary()}
         {renderAmountToPay()}
