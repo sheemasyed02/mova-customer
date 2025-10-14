@@ -54,12 +54,10 @@ export default function SearchScreen() {
   const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
   const { updateScrollDirection } = useScrollContext();
   
-  // Update scroll context when scroll direction changes
   React.useEffect(() => {
     updateScrollDirection(scrollDirection);
   }, [scrollDirection, updateScrollDirection]);
 
-  // Cleanup on unmount
   React.useEffect(() => {
     return () => {
       cleanup();
@@ -105,7 +103,6 @@ export default function SearchScreen() {
 
   const handleSearchSubmit = () => {
     if (searchText.trim()) {
-      // Add to recent searches and perform search
       console.log('Searching for:', searchText);
       setIsSearchFocused(false);
     }
