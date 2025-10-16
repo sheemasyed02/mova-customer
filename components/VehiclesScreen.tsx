@@ -6,13 +6,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -235,6 +235,11 @@ export default function VehiclesScreen() {
           <Text style={styles.instantText}>Instant</Text>
         </View>
       )}
+
+      {/* Heart/Favorite button */}
+      <TouchableOpacity style={styles.heartButton}>
+        <Ionicons name="heart-outline" size={20} color={Colors.text.secondary} />
+      </TouchableOpacity>
 
       <View style={styles.vehicleImageContainer}>
         <View style={styles.placeholderImage}>
@@ -560,5 +565,22 @@ const styles = StyleSheet.create({
   },
   bookButtonTextDisabled: {
     color: Colors.text.secondary,
+  },
+  heartButton: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   },
 });

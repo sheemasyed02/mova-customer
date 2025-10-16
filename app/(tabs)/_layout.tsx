@@ -42,13 +42,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="favorites"
         options={{
-          title: 'Explore',
+          title: 'Favorites',
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon 
-              name={focused ? "search" : "search-outline"} 
+              name={focused ? "heart" : "heart-outline"} 
               color={color} 
             />
           ),
