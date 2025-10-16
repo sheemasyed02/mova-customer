@@ -1,6 +1,4 @@
 import { Colors } from '@/constants/Colors';
-import { useScrollContext } from '@/contexts/ScrollContext';
-import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -66,20 +64,6 @@ export default function FavoritesScreen() {
   const [editMode, setEditMode] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
-
-  // Scroll detection for animated tab bar
-  const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
-  const { updateScrollDirection } = useScrollContext();
-
-  React.useEffect(() => {
-    updateScrollDirection(scrollDirection);
-  }, [scrollDirection, updateScrollDirection]);
-
-  React.useEffect(() => {
-    return () => {
-      cleanup();
-    };
-  }, [cleanup]);
 
   // Sample data - replace with API data
   React.useEffect(() => {
@@ -290,7 +274,6 @@ export default function FavoritesScreen() {
   };
 
   const handleBookVehicle = (vehicle: FavoriteVehicle) => {
-    cleanup();
     router.push({
       pathname: '/booking' as any,
       params: {
@@ -323,6 +306,13 @@ export default function FavoritesScreen() {
   const renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.headerTop}>
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
+          <Ionicons name="chevron-back" size={24} color={Colors.text.primary} />
+        </TouchableOpacity>
+        
         <View style={styles.headerLeft}>
           <Text style={styles.headerTitle}>My Favorites</Text>
           <Text style={styles.headerSubtitle}>
@@ -706,8 +696,6 @@ export default function FavoritesScreen() {
             key={viewMode} // Force re-render when view mode changes
             contentContainerStyle={styles.listContainer}
             showsVerticalScrollIndicator={false}
-            onScroll={onScroll}
-            scrollEventThrottle={16}
           />
         </View>
       )}
@@ -731,6 +719,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  backButton: {
+    padding: 8,
+    marginRight: 16,
   },
   headerLeft: {
     flex: 1,

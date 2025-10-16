@@ -3,17 +3,18 @@ import { useScrollContext } from '@/contexts/ScrollContext';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Dimensions,
-  FlatList,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Dimensions,
+    FlatList,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -37,6 +38,7 @@ interface SearchFilter {
 }
 
 export default function SearchScreen() {
+  const router = useRouter();
   const [searchText, setSearchText] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
@@ -146,6 +148,13 @@ export default function SearchScreen() {
             <Ionicons name="mic" size={20} color={Colors.primary.teal} />
           </TouchableOpacity>
         </View>
+        
+        <TouchableOpacity 
+          style={styles.heartButton}
+          onPress={() => router.push('/favorites')}
+        >
+          <Ionicons name="heart-outline" size={20} color={Colors.primary.teal} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -433,6 +442,12 @@ const styles = StyleSheet.create({
   },
   voiceButton: {
     padding: 4,
+  },
+  heartButton: {
+    padding: 8,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 20,
+    marginLeft: 12,
   },
   scrollView: {
     flex: 1,

@@ -1,6 +1,4 @@
 import { Colors } from '@/constants/Colors';
-import { useScrollContext } from '@/contexts/ScrollContext';
-import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
@@ -64,20 +62,6 @@ export default function FavoritesScreen() {
   const [editMode, setEditMode] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
-
-  // Scroll detection for animated tab bar
-  const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
-  const { updateScrollDirection } = useScrollContext();
-
-  React.useEffect(() => {
-    updateScrollDirection(scrollDirection);
-  }, [scrollDirection, updateScrollDirection]);
-
-  React.useEffect(() => {
-    return () => {
-      cleanup();
-    };
-  }, [cleanup]);
 
   // Sample data - replace with API data
   React.useEffect(() => {
@@ -288,7 +272,6 @@ export default function FavoritesScreen() {
   };
 
   const handleBookVehicle = (vehicle: FavoriteVehicle) => {
-    cleanup();
     router.push({
       pathname: '/booking' as any,
       params: {

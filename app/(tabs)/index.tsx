@@ -6,16 +6,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Dimensions,
-  FlatList,
-  Image,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Dimensions,
+    FlatList,
+    Image,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -212,6 +212,13 @@ export default function HomeScreen() {
         </TouchableOpacity>
         
         <View style={styles.headerActions}>
+          <TouchableOpacity 
+            style={styles.heartButton}
+            onPress={() => router.push('/favorites')}
+          >
+            <Ionicons name="heart-outline" size={20} color={Colors.primary.teal} />
+          </TouchableOpacity>
+          
           <TouchableOpacity style={styles.notificationButton}>
             <Ionicons name="notifications" size={20} color={Colors.text.secondary} />
             <View style={styles.notificationBadge}>
@@ -513,6 +520,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+  },
+  heartButton: {
+    padding: 8,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 20,
   },
   notificationButton: {
     position: 'relative',

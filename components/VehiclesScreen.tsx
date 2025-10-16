@@ -6,13 +6,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Dimensions,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
+    Dimensions,
+    FlatList,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -174,8 +174,16 @@ export default function VehiclesScreen() {
 
   const renderHeader = () => (
     <View style={styles.header}>
-      <Text style={styles.headerTitle}>Available Vehicles</Text>
-      <Text style={styles.headerSubtitle}>Find and book your perfect ride</Text>
+      <View style={styles.headerLeft}>
+        <Text style={styles.headerTitle}>Available Vehicles</Text>
+        <Text style={styles.headerSubtitle}>Find and book your perfect ride</Text>
+      </View>
+      <TouchableOpacity 
+        style={styles.headerHeartButton}
+        onPress={() => router.push('/favorites')}
+      >
+        <Ionicons name="heart-outline" size={24} color={Colors.primary.teal} />
+      </TouchableOpacity>
     </View>
   );
 
@@ -345,6 +353,12 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  headerLeft: {
+    flex: 1,
   },
   headerTitle: {
     fontSize: 24,
@@ -582,5 +596,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+  },
+  headerHeartButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: Colors.background.lightGrey,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
