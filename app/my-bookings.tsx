@@ -409,7 +409,19 @@ export default function MyBookingsScreen() {
       case 'completed':
         if (!booking.isRated) {
           buttons.push(
-            <TouchableOpacity key="rate" style={[styles.actionButton, styles.primaryButton]}>
+            <TouchableOpacity 
+              key="rate" 
+              style={[styles.actionButton, styles.primaryButton]}
+              onPress={() => router.push({
+                pathname: '/rate-review' as any,
+                params: {
+                  bookingId: booking.bookingId,
+                  vehicleName: booking.vehicleName,
+                  ownerName: booking.ownerName,
+                  vehicleImage: booking.vehicleImage,
+                }
+              })}
+            >
               <Text style={[styles.actionButtonText, styles.primaryButtonText]}>Rate Experience</Text>
             </TouchableOpacity>
           );

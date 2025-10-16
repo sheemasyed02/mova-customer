@@ -1,20 +1,21 @@
+import RatePromptCard from '@/components/RatePromptCard';
 import { Colors } from '@/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Dimensions,
-  Image,
-  Linking,
-  Modal,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Dimensions,
+    Image,
+    Linking,
+    Modal,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -97,6 +98,7 @@ export default function BookingDetailsScreen() {
   const [expandedFAQ, setExpandedFAQ] = useState<string | null>(null);
   const [cancelReason, setCancelReason] = useState('');
   const [customReason, setCustomReason] = useState('');
+  const [showRatePrompt, setShowRatePrompt] = useState(false);
 
   // Sample data - replace with actual API data
   const bookingData: BookingDetailsData = {
@@ -171,6 +173,21 @@ export default function BookingDetailsScreen() {
       ],
     },
   };
+
+  // Show rate prompt for completed bookings that haven't been rated yet
+  React.useEffect(() => {
+    if (bookingData.status === 'completed') {
+      // In a real app, you'd check if the user has already rated this booking
+      const hasAlreadyRated = false; // This should come from your API
+      if (!hasAlreadyRated) {
+        const timer = setTimeout(() => {
+          setShowRatePrompt(true);
+        }, 1000); // Show prompt after 1 second
+        
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [bookingData.status]);
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
@@ -681,6 +698,16 @@ export default function BookingDetailsScreen() {
                     router.push('/extend-booking' as any);
                   } else if (button.text === 'Report Issue') {
                     router.push('/report-issue' as any);
+                  } else if (button.text === 'Rate & Review') {
+                    router.push({
+                      pathname: '/rate-review' as any,
+                      params: {
+                        bookingId: bookingData.bookingId,
+                        vehicleName: bookingData.vehicle.name,
+                        ownerName: bookingData.owner.name,
+                        vehicleImage: bookingData.vehicle.image,
+                      }
+                    });
                   }
                 }}
               >
@@ -844,6 +871,16 @@ export default function BookingDetailsScreen() {
       {renderBottomActions()}
       {renderMenuModal()}
       {renderCancelModal()}
+      
+      <RatePromptCard
+        visible={showRatePrompt}
+        bookingId={bookingData.bookingId}
+        vehicleName={bookingData.vehicle.name}
+        ownerName={bookingData.owner.name}
+        vehicleImage={bookingData.vehicle.image}
+        onDismiss={() => setShowRatePrompt(false)}
+        onRate={() => setShowRatePrompt(false)}
+      />
     </View>
   );
 }
