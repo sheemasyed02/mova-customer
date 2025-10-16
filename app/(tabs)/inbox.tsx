@@ -52,9 +52,9 @@ export default function InboxScreen() {
   const filterOptions = ['All', 'Owners', 'Support', 'Notifications'];
   
   const tabs: TabItem[] = [
-    { id: 'all', title: 'All Messages', count: 12 },
-    { id: 'booking', title: 'Booking Related', count: 5 },
-    { id: 'promotions', title: 'Promotions', count: 3 },
+    { id: 'all', title: 'All', count: 12 },
+    { id: 'booking', title: 'Bookings', count: 5 },
+    { id: 'promotions', title: 'Promos', count: 3 },
     { id: 'archived', title: 'Archived', count: 8 },
   ];
 
@@ -385,36 +385,43 @@ export default function InboxScreen() {
 
   const renderTabs = () => (
     <View style={styles.tabsContainer}>
-      {tabs.map((tab) => (
-        <TouchableOpacity
-          key={tab.id}
-          style={[
-            styles.tab,
-            selectedTab === tab.id && styles.tabActive
-          ]}
-          onPress={() => setSelectedTab(tab.id)}
-        >
-          <Text style={[
-            styles.tabText,
-            selectedTab === tab.id && styles.tabTextActive
-          ]}>
-            {tab.title}
-          </Text>
-          {tab.count > 0 && (
-            <View style={[
-              styles.tabBadge,
-              selectedTab === tab.id && styles.tabBadgeActive
+      <FlatList
+        data={tabs}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.tabsList}
+        renderItem={({ item: tab }) => (
+          <TouchableOpacity
+            key={tab.id}
+            style={[
+              styles.tab,
+              selectedTab === tab.id && styles.tabActive
+            ]}
+            onPress={() => setSelectedTab(tab.id)}
+          >
+            <Text style={[
+              styles.tabText,
+              selectedTab === tab.id && styles.tabTextActive
             ]}>
-              <Text style={[
-                styles.tabBadgeText,
-                selectedTab === tab.id && styles.tabBadgeTextActive
+              {tab.title}
+            </Text>
+            {tab.count > 0 && (
+              <View style={[
+                styles.tabBadge,
+                selectedTab === tab.id && styles.tabBadgeActive
               ]}>
-                {tab.count}
-              </Text>
-            </View>
-          )}
-        </TouchableOpacity>
-      ))}
+                <Text style={[
+                  styles.tabBadgeText,
+                  selectedTab === tab.id && styles.tabBadgeTextActive
+                ]}>
+                  {tab.count}
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 
@@ -642,45 +649,51 @@ const styles = StyleSheet.create({
   },
   tabsContainer: {
     backgroundColor: Colors.background.white,
-    paddingHorizontal: 20,
+    paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
+  },
+  tabsList: {
+    paddingHorizontal: 20,
   },
   tab: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 16,
-    paddingHorizontal: 12,
-    borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
-    marginRight: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginRight: 12,
+    backgroundColor: Colors.background.lightGrey,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
   },
   tabActive: {
-    borderBottomColor: Colors.primary.teal,
+    backgroundColor: Colors.primary.teal,
+    borderColor: Colors.primary.teal,
   },
   tabText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '500',
     color: Colors.text.secondary,
   },
   tabTextActive: {
-    color: Colors.primary.teal,
+    color: '#ffffff',
     fontWeight: '600',
   },
   tabBadge: {
-    backgroundColor: '#E5E7EB',
-    borderRadius: 10,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    marginLeft: 6,
-    minWidth: 20,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    borderRadius: 8,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+    marginLeft: 4,
+    minWidth: 16,
     alignItems: 'center',
   },
   tabBadgeActive: {
-    backgroundColor: Colors.primary.teal,
+    backgroundColor: 'rgba(255,255,255,0.3)',
   },
   tabBadgeText: {
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: '600',
     color: Colors.text.secondary,
   },
