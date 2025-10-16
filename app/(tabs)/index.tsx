@@ -3,6 +3,7 @@ import { useScrollContext } from '@/contexts/ScrollContext';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
   Dimensions,
@@ -50,6 +51,7 @@ interface Promotion {
 }
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [selectedCity, setSelectedCity] = useState('Bangalore');
   const [searchText, setSearchText] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All Cars');
@@ -368,7 +370,25 @@ export default function HomeScreen() {
           <Text style={styles.vehicleDistance}>{item.distance} km away</Text>
         </View>
         
-        <TouchableOpacity style={styles.bookButton}>
+        <TouchableOpacity 
+          style={styles.bookButton}
+          onPress={() => router.push({
+                  pathname: '/booking' as any,
+                  params: {
+                    vehicleId: item.id,
+                    vehicleName: item.name,
+                    vehiclePrice: item.price.toString(),
+                    vehicleImage: item.image,
+                    vehicleLocation: 'Bangalore',
+                    vehicleSpecs: item.specs,
+                    vehicleRating: item.rating.toString(),
+                    vehicleReviews: item.reviews.toString(),
+                    vehicleFuelType: 'Petrol',
+                    vehicleTransmission: 'Automatic',
+                    vehicleSeats: '5'
+                  }
+                })}
+        >
           <LinearGradient
             colors={[Colors.primary.teal, Colors.accent.blue]}
             style={styles.bookButtonGradient}

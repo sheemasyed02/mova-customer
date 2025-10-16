@@ -55,13 +55,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="trips"
+        name="vehicles"
         options={{
-          title: 'My Trips',
+          title: 'Vehicles',
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon 
-              name={focused ? "car-sport" : "car-sport-outline"} 
+              name={focused ? "car" : "car-outline"} 
               color={color} 
             />
           ),
@@ -81,13 +81,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="bookings"
+        name="my-bookings"
         options={{
-          title: 'Bookings',
+          title: 'My Bookings',
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon 
-              name={focused ? "calendar" : "calendar-outline"} 
+              name={focused ? "list" : "list-outline"} 
               color={color} 
             />
           ),

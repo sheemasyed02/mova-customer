@@ -10,8 +10,8 @@ import LoadingScreen from '@/components/LoadingScreen';
 import { useColorScheme } from '@/components/useColorScheme';
 
 export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary
+    // Catch any errors thrown by the Layout component.
+    ErrorBoundary
 } from 'expo-router';
 
 export const unstable_settings = {
@@ -63,8 +63,9 @@ function RootLayoutNav() {
         <Stack.Screen name="home-permission" options={{ headerShown: false }} />
         <Stack.Screen name="notification-permission" options={{ headerShown: false }} />
         <Stack.Screen name="vehicle-inspection" options={{ headerShown: false }} />
-        <Stack.Screen name="my-trips" options={{ headerShown: false }} />
-        <Stack.Screen name="trip-details" options={{ headerShown: false }} />
+        <Stack.Screen name="booking" options={{ headerShown: false }} />
+        <Stack.Screen name="my-bookings" options={{ headerShown: false }} />
+        <Stack.Screen name="booking-details" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />

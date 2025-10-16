@@ -6,22 +6,22 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Dimensions,
-  FlatList,
-  Image,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
+    Dimensions,
+    FlatList,
+    Image,
+    Modal,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 
-interface TripData {
+interface BookingData {
   id: string;
   bookingId: string;
   vehicleImage: string;
@@ -45,7 +45,7 @@ interface TripData {
   endTimeHours?: number;
 }
 
-export default function MyTripsScreen() {
+export default function MyBookingsScreen() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('upcoming');
   const [searchQuery, setSearchQuery] = useState('');
@@ -74,7 +74,7 @@ export default function MyTripsScreen() {
   }, [cleanup]);
 
   // Sample data - replace with actual API data
-  const sampleTrips: TripData[] = [
+  const sampleBookings: BookingData[] = [
     {
       id: '1',
       bookingId: 'MOV-12345',
@@ -142,8 +142,8 @@ export default function MyTripsScreen() {
     },
   ];
 
-  const getFilteredTrips = () => {
-    let filtered = sampleTrips;
+  const getFilteredBookings = () => {
+    let filtered = sampleBookings;
 
     // Filter by tab
     switch (activeTab) {
@@ -163,9 +163,9 @@ export default function MyTripsScreen() {
 
     // Filter by search query
     if (searchQuery.trim()) {
-      filtered = filtered.filter(trip => 
-        trip.vehicleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        trip.bookingId.toLowerCase().includes(searchQuery.toLowerCase())
+      filtered = filtered.filter(booking => 
+        booking.vehicleName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        booking.bookingId.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
@@ -175,13 +175,13 @@ export default function MyTripsScreen() {
   const getTabCount = (tab: string) => {
     switch (tab) {
       case 'upcoming':
-        return sampleTrips.filter(trip => ['confirmed', 'pending_approval', 'payment_pending'].includes(trip.status)).length;
+        return sampleBookings.filter(booking => ['confirmed', 'pending_approval', 'payment_pending'].includes(booking.status)).length;
       case 'ongoing':
-        return sampleTrips.filter(trip => trip.status === 'ongoing').length;
+        return sampleBookings.filter(booking => booking.status === 'ongoing').length;
       case 'completed':
-        return sampleTrips.filter(trip => trip.status === 'completed').length;
+        return sampleBookings.filter(booking => booking.status === 'completed').length;
       case 'cancelled':
-        return sampleTrips.filter(trip => trip.status === 'cancelled').length;
+        return sampleBookings.filter(booking => booking.status === 'cancelled').length;
       default:
         return 0;
     }
@@ -192,7 +192,7 @@ export default function MyTripsScreen() {
       confirmed: { label: 'Confirmed', color: Colors.functional.success, bg: '#D1FAE5' },
       pending_approval: { label: 'Pending Owner Approval', color: Colors.functional.warning, bg: '#FEF3C7' },
       payment_pending: { label: 'Payment Pending', color: Colors.functional.error, bg: '#FEE2E2' },
-      ongoing: { label: 'Trip in Progress', color: Colors.primary.teal, bg: '#E0F2FE' },
+      ongoing: { label: 'Rental in Progress', color: Colors.primary.teal, bg: '#E0F2FE' },
       completed: { label: 'Completed', color: Colors.text.secondary, bg: '#F3F4F6' },
       cancelled: { label: 'Cancelled', color: Colors.functional.error, bg: '#FEE2E2' },
     };
@@ -215,7 +215,7 @@ export default function MyTripsScreen() {
       <View style={styles.headerTop}>
         <View style={styles.headerSpacer} />
         
-        <Text style={styles.headerTitle}>My Trips</Text>
+        <Text style={styles.headerTitle}>My Bookings</Text>
         
         <View style={styles.headerActions}>
           <TouchableOpacity 
@@ -291,17 +291,17 @@ export default function MyTripsScreen() {
     </View>
   );
 
-  const renderTripCard = ({ item }: { item: TripData }) => (
-    <View style={styles.tripCard}>
-      <View style={styles.tripHeader}>
+  const renderBookingCard = ({ item }: { item: BookingData }) => (
+    <View style={styles.bookingCard}>
+      <View style={styles.bookingHeader}>
         <Text style={styles.bookingId}>#{item.bookingId}</Text>
         {getStatusBadge(item.status)}
       </View>
       
-      <View style={styles.tripContent}>
+      <View style={styles.bookingContent}>
         <Image source={{ uri: item.vehicleImage }} style={styles.vehicleImage} />
         
-        <View style={styles.tripInfo}>
+        <View style={styles.bookingInfo}>
           <Text style={styles.vehicleName}>{item.vehicleName}</Text>
           
           {activeTab === 'upcoming' && (
@@ -320,7 +320,7 @@ export default function MyTripsScreen() {
             </View>
           )}
           
-          <View style={styles.tripDates}>
+          <View style={styles.bookingDates}>
             <View style={styles.dateRow}>
               <Ionicons name="location" size={14} color={Colors.primary.teal} />
               <Text style={styles.dateText}>Pickup: {item.pickupDate}</Text>
@@ -331,7 +331,7 @@ export default function MyTripsScreen() {
             </View>
           </View>
           
-          <View style={styles.tripDetails}>
+          <View style={styles.bookingDetails}>
             <Text style={styles.duration}>{item.duration}</Text>
             <Text style={styles.location}>{item.pickupLocation}</Text>
           </View>
@@ -356,7 +356,7 @@ export default function MyTripsScreen() {
     </View>
   );
 
-  const renderActionButtons = (trip: TripData) => {
+  const renderActionButtons = (booking: BookingData) => {
     const buttons = [];
 
     // Common buttons
@@ -366,7 +366,7 @@ export default function MyTripsScreen() {
       </TouchableOpacity>
     );
 
-    switch (trip.status) {
+    switch (booking.status) {
       case 'pending_approval':
         buttons.push(
           <TouchableOpacity key="upload" style={styles.actionButton}>
@@ -407,7 +407,7 @@ export default function MyTripsScreen() {
         break;
         
       case 'completed':
-        if (!trip.isRated) {
+        if (!booking.isRated) {
           buttons.push(
             <TouchableOpacity key="rate" style={[styles.actionButton, styles.primaryButton]}>
               <Text style={[styles.actionButtonText, styles.primaryButtonText]}>Rate Experience</Text>
@@ -425,7 +425,7 @@ export default function MyTripsScreen() {
         break;
         
       case 'cancelled':
-        if (trip.refundStatus) {
+        if (booking.refundStatus) {
           buttons.push(
             <TouchableOpacity key="refund" style={styles.actionButton}>
               <Text style={styles.actionButtonText}>Refund Details</Text>
@@ -456,20 +456,20 @@ export default function MyTripsScreen() {
     );
   };
 
-  const renderCancelledDetails = (trip: TripData) => {
-    if (trip.status !== 'cancelled') return null;
+  const renderCancelledDetails = (booking: BookingData) => {
+    if (booking.status !== 'cancelled') return null;
     
     return (
       <View style={styles.cancelledDetails}>
-        <Text style={styles.cancelledDate}>Cancelled on {trip.cancellationDate}</Text>
-        <Text style={styles.cancelledReason}>Reason: {trip.cancellationReason}</Text>
-        {trip.refundStatus && (
+        <Text style={styles.cancelledDate}>Cancelled on {booking.cancellationDate}</Text>
+        <Text style={styles.cancelledReason}>Reason: {booking.cancellationReason}</Text>
+        {booking.refundStatus && (
           <Text style={[
             styles.refundStatus,
-            { color: trip.refundStatus === 'refunded' ? Colors.functional.success : Colors.functional.warning }
+            { color: booking.refundStatus === 'refunded' ? Colors.functional.success : Colors.functional.warning }
           ]}>
-            {trip.refundStatus === 'refunded' 
-              ? `Refunded ₹${trip.refundAmount?.toLocaleString()}` 
+            {booking.refundStatus === 'refunded' 
+              ? `Refunded ₹${booking.refundAmount?.toLocaleString()}` 
               : 'Refund Pending'
             }
           </Text>
@@ -483,8 +483,8 @@ export default function MyTripsScreen() {
       <View style={styles.emptyIcon}>
         <Ionicons name="car-outline" size={60} color={Colors.text.light} />
       </View>
-      <Text style={styles.emptyTitle}>No trips yet</Text>
-      <Text style={styles.emptySubtitle}>Ready to explore?</Text>
+      <Text style={styles.emptyTitle}>No bookings yet</Text>
+      <Text style={styles.emptySubtitle}>Ready to rent your first vehicle?</Text>
       <TouchableOpacity 
         style={styles.browseButton}
         onPress={() => router.push('/(tabs)/explore')}
@@ -588,17 +588,17 @@ export default function MyTripsScreen() {
     </Modal>
   );
 
-  const filteredTrips = getFilteredTrips();
+  const filteredBookings = getFilteredBookings();
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       {renderHeader()}
       {renderTabs()}
       
-      {filteredTrips.length > 0 ? (
+      {filteredBookings.length > 0 ? (
         <FlatList
-          data={filteredTrips}
-          renderItem={renderTripCard}
+          data={filteredBookings}
+          renderItem={renderBookingCard}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.listContainer}
           showsVerticalScrollIndicator={false}
@@ -721,14 +721,14 @@ const styles = StyleSheet.create({
     paddingBottom: 100, // Extra space for tab bar
     gap: 16,
   },
-  tripCard: {
+  bookingCard: {
     backgroundColor: Colors.background.white,
     borderRadius: 12,
     padding: 16,
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
-  tripHeader: {
+  bookingHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -748,7 +748,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: '600',
   },
-  tripContent: {
+  bookingContent: {
     flexDirection: 'row',
     gap: 12,
     marginBottom: 16,
@@ -758,7 +758,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 8,
   },
-  tripInfo: {
+  bookingInfo: {
     flex: 1,
     gap: 4,
   },
@@ -792,7 +792,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.text.secondary,
   },
-  tripDates: {
+  bookingDates: {
     gap: 2,
   },
   dateRow: {
@@ -804,7 +804,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.text.secondary,
   },
-  tripDetails: {
+  bookingDetails: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

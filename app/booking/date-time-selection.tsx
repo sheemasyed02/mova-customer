@@ -1,18 +1,16 @@
 import { Colors } from '@/constants/Colors';
-import { useScrollContext } from '@/contexts/ScrollContext';
-import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    Modal,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -63,22 +61,6 @@ export default function DateTimeSelection({ bookingData, updateBookingData, onNe
   const [showReturnTime, setShowReturnTime] = useState(false);
   const [sameLocation, setSameLocation] = useState(true);
   const [estimatedKm, setEstimatedKm] = useState('600');
-
-  // Scroll detection for animated tab bar
-  const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
-  const { updateScrollDirection } = useScrollContext();
-  
-  // Update scroll context when scroll direction changes
-  React.useEffect(() => {
-    updateScrollDirection(scrollDirection);
-  }, [scrollDirection, updateScrollDirection]);
-
-  // Cleanup on unmount
-  React.useEffect(() => {
-    return () => {
-      cleanup();
-    };
-  }, [cleanup]);
 
   // Generate time slots
   const generateTimeSlots = () => {
@@ -304,8 +286,6 @@ export default function DateTimeSelection({ bookingData, updateBookingData, onNe
 
   const renderPickupDetails = () => (
     <View style={styles.sectionCard}>
-      <Text style={styles.sectionTitle}>Pickup Details</Text>
-      
       <View style={styles.inputGroup}>
         <Text style={styles.inputLabel}>Date</Text>
         <TouchableOpacity 
@@ -362,8 +342,6 @@ export default function DateTimeSelection({ bookingData, updateBookingData, onNe
 
   const renderReturnDetails = () => (
     <View style={styles.sectionCard}>
-      <Text style={styles.sectionTitle}>Return Details</Text>
-      
       <View style={styles.inputGroup}>
         <Text style={styles.inputLabel}>Date</Text>
         <TouchableOpacity 
@@ -429,8 +407,6 @@ export default function DateTimeSelection({ bookingData, updateBookingData, onNe
     
     return (
       <View style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Trip Summary</Text>
-        
         {duration > 0 && (
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Duration:</Text>
@@ -487,7 +463,6 @@ export default function DateTimeSelection({ bookingData, updateBookingData, onNe
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        onScroll={onScroll}
         scrollEventThrottle={16}
       >
         {renderVehicleSummary()}

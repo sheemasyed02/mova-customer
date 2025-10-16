@@ -4,15 +4,17 @@ import DateTimeSelection from '@/app/booking/date-time-selection';
 import Payment from '@/app/booking/payment';
 import ReviewConfirm from '@/app/booking/review-confirm';
 import { Colors } from '@/constants/Colors';
+import { ScrollProvider } from '@/contexts/ScrollContext';
 import { Ionicons } from '@expo/vector-icons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Dimensions,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -67,25 +69,28 @@ interface BookingData {
 }
 
 export default function BookingFlow() {
+  const router = useRouter();
+  const params = useLocalSearchParams();
+  
   const [currentStep, setCurrentStep] = useState(1);
   const [bookingData, setBookingData] = useState<BookingData>({
     vehicle: {
-      id: '1',
-      name: 'Hyundai Creta 2023',
-      image: '',
-      pricePerDay: 2500,
-      location: 'MG Road, Bangalore',
+      id: (params.vehicleId as string) || '1',
+      name: (params.vehicleName as string) || 'Hyundai Creta 2023',
+      image: (params.vehicleImage as string) || '',
+      pricePerDay: Number(params.vehiclePrice) || 2500,
+      location: (params.vehicleLocation as string) || 'MG Road, Bangalore',
     },
     pickup: {
       date: null,
       time: '',
-      location: 'MG Road, Bangalore',
+      location: (params.vehicleLocation as string) || 'MG Road, Bangalore',
       delivery: false,
     },
     return: {
       date: null,
       time: '',
-      location: 'MG Road, Bangalore',
+      location: (params.vehicleLocation as string) || 'MG Road, Bangalore',
     },
     addons: {
       delivery: false,
@@ -98,7 +103,7 @@ export default function BookingFlow() {
       prepaidFuel: false,
     },
     pricing: {
-      baseRental: 5000,
+      baseRental: Number(params.vehiclePrice) || 2500,
       addonsTotal: 0,
       platformFee: 200,
       gst: 0,
@@ -232,14 +237,18 @@ export default function BookingFlow() {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      
-      <SafeAreaView style={styles.safeArea}>
+    <ScrollProvider>
+      <View style={styles.container}>
+        <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+        
+        <SafeAreaView style={styles.safeArea}>
         {/* Header */}
         <View style={styles.header}>
-          {currentStep > 1 && currentStep < 5 && (
-            <TouchableOpacity style={styles.backButton} onPress={prevStep}>
+          {currentStep < 5 && (
+            <TouchableOpacity 
+              style={styles.backButton} 
+              onPress={currentStep === 1 ? () => router.back() : prevStep}
+            >
               <Ionicons name="arrow-back" size={24} color={Colors.text.primary} />
             </TouchableOpacity>
           )}
@@ -264,6 +273,7 @@ export default function BookingFlow() {
         {renderCurrentStep()}
       </SafeAreaView>
     </View>
+    </ScrollProvider>
   );
 }
 

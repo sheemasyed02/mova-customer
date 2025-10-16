@@ -4,23 +4,23 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    Image,
-    Linking,
-    Modal,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Image,
+  Linking,
+  Modal,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 
-interface TripDetailsData {
+interface BookingDetailsData {
   bookingId: string;
   status: 'upcoming' | 'ongoing' | 'completed' | 'cancelled';
   timeline: Array<{
@@ -90,7 +90,7 @@ interface TripDetailsData {
   };
 }
 
-export default function TripDetailsScreen() {
+export default function BookingDetailsScreen() {
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -99,7 +99,7 @@ export default function TripDetailsScreen() {
   const [customReason, setCustomReason] = useState('');
 
   // Sample data - replace with actual API data
-  const tripData: TripDetailsData = {
+  const bookingData: BookingDetailsData = {
     bookingId: 'MOV-12345',
     status: 'upcoming',
     timeline: [
@@ -208,8 +208,8 @@ export default function TripDetailsScreen() {
         </TouchableOpacity>
         
         <View style={styles.headerCenter}>
-          <Text style={styles.bookingId}>#{tripData.bookingId}</Text>
-          {getStatusBadge(tripData.status)}
+          <Text style={styles.bookingId}>#{bookingData.bookingId}</Text>
+          {getStatusBadge(bookingData.status)}
         </View>
         
         <TouchableOpacity 
@@ -226,7 +226,7 @@ export default function TripDetailsScreen() {
     <View style={styles.card}>
       <Text style={styles.cardTitle}>Status Timeline</Text>
       <View style={styles.timeline}>
-        {tripData.timeline.map((item, index) => (
+        {bookingData.timeline.map((item, index) => (
           <View key={index} style={styles.timelineItem}>
             <View style={styles.timelineLeft}>
               <View style={[
@@ -237,7 +237,7 @@ export default function TripDetailsScreen() {
                   <Ionicons name="checkmark" size={12} color="#ffffff" />
                 )}
               </View>
-              {index < tripData.timeline.length - 1 && (
+              {index < bookingData.timeline.length - 1 && (
                 <View style={[
                   styles.timelineLine,
                   item.completed && styles.timelineLineCompleted
@@ -262,12 +262,12 @@ export default function TripDetailsScreen() {
   const renderVehicleDetails = () => (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>Vehicle Details</Text>
-      <Image source={{ uri: tripData.vehicle.image }} style={styles.vehicleImage} />
+      <Image source={{ uri: bookingData.vehicle.image }} style={styles.vehicleImage} />
       <View style={styles.vehicleInfo}>
-        <Text style={styles.vehicleName}>{tripData.vehicle.name}</Text>
-        <Text style={styles.vehicleRegistration}>{tripData.vehicle.registration}</Text>
+        <Text style={styles.vehicleName}>{bookingData.vehicle.name}</Text>
+        <Text style={styles.vehicleRegistration}>{bookingData.vehicle.registration}</Text>
         <View style={styles.vehicleFeatures}>
-          {tripData.vehicle.features.map((feature, index) => (
+          {bookingData.vehicle.features.map((feature, index) => (
             <View key={index} style={styles.featureTag}>
               <Text style={styles.featureText}>{feature}</Text>
             </View>
@@ -275,7 +275,7 @@ export default function TripDetailsScreen() {
         </View>
         <View style={styles.vehicleRating}>
           <Ionicons name="star" size={16} color="#FFD700" />
-          <Text style={styles.ratingText}>{tripData.vehicle.rating}</Text>
+          <Text style={styles.ratingText}>{bookingData.vehicle.rating}</Text>
         </View>
         <TouchableOpacity style={styles.viewDetailsButton}>
           <Text style={styles.viewDetailsText}>View Vehicle Details</Text>
@@ -291,14 +291,14 @@ export default function TripDetailsScreen() {
       
       <View style={styles.tripSection}>
         <Text style={styles.tripSectionTitle}>Pickup</Text>
-        <Text style={styles.tripDateTime}>{tripData.pickup.date}, {tripData.pickup.time}</Text>
-        <Text style={styles.tripLocation}>{tripData.pickup.location}</Text>
-        <Text style={styles.tripAddress}>{tripData.pickup.address}</Text>
+        <Text style={styles.tripDateTime}>{bookingData.pickup.date}, {bookingData.pickup.time}</Text>
+        <Text style={styles.tripLocation}>{bookingData.pickup.location}</Text>
+        <Text style={styles.tripAddress}>{bookingData.pickup.address}</Text>
         
         <View style={styles.tripActions}>
           <TouchableOpacity 
             style={styles.actionButton}
-            onPress={() => openMaps(tripData.pickup.address)}
+            onPress={() => openMaps(bookingData.pickup.address)}
           >
             <Ionicons name="navigate" size={16} color={Colors.primary.teal} />
             <Text style={styles.actionButtonText}>Get Directions</Text>
@@ -312,8 +312,8 @@ export default function TripDetailsScreen() {
         
         <View style={styles.contactInfo}>
           <Text style={styles.contactLabel}>Contact for pickup:</Text>
-          <TouchableOpacity onPress={() => callPhone(tripData.pickup.contactPhone)}>
-            <Text style={styles.contactPhone}>{tripData.pickup.contactPhone}</Text>
+          <TouchableOpacity onPress={() => callPhone(bookingData.pickup.contactPhone)}>
+            <Text style={styles.contactPhone}>{bookingData.pickup.contactPhone}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -322,9 +322,9 @@ export default function TripDetailsScreen() {
       
       <View style={styles.tripSection}>
         <Text style={styles.tripSectionTitle}>Return</Text>
-        <Text style={styles.tripDateTime}>{tripData.return.date}, {tripData.return.time}</Text>
-        <Text style={styles.tripLocation}>{tripData.return.location}</Text>
-        <Text style={styles.instructions}>{tripData.return.instructions}</Text>
+        <Text style={styles.tripDateTime}>{bookingData.return.date}, {bookingData.return.time}</Text>
+        <Text style={styles.tripLocation}>{bookingData.return.location}</Text>
+        <Text style={styles.instructions}>{bookingData.return.instructions}</Text>
       </View>
       
       <View style={styles.separator} />
@@ -332,11 +332,11 @@ export default function TripDetailsScreen() {
       <View style={styles.tripStats}>
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>Duration</Text>
-          <Text style={styles.statValue}>{tripData.duration}</Text>
+          <Text style={styles.statValue}>{bookingData.duration}</Text>
         </View>
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>Estimated KM</Text>
-          <Text style={styles.statValue}>{tripData.estimatedKm} km</Text>
+          <Text style={styles.statValue}>{bookingData.estimatedKm} km</Text>
         </View>
       </View>
     </View>
@@ -349,44 +349,44 @@ export default function TripDetailsScreen() {
       <View style={styles.pricingSection}>
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>Base rental:</Text>
-          <Text style={styles.priceValue}>₹{tripData.pricing.baseRental.toLocaleString()}</Text>
+          <Text style={styles.priceValue}>₹{bookingData.pricing.baseRental.toLocaleString()}</Text>
         </View>
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>Delivery charges:</Text>
-          <Text style={styles.priceValue}>₹{tripData.pricing.deliveryCharges.toLocaleString()}</Text>
+          <Text style={styles.priceValue}>₹{bookingData.pricing.deliveryCharges.toLocaleString()}</Text>
         </View>
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>Enhanced coverage:</Text>
-          <Text style={styles.priceValue}>₹{tripData.pricing.enhancedCoverage.toLocaleString()}</Text>
+          <Text style={styles.priceValue}>₹{bookingData.pricing.enhancedCoverage.toLocaleString()}</Text>
         </View>
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>Child seat:</Text>
-          <Text style={styles.priceValue}>₹{tripData.pricing.childSeat.toLocaleString()}</Text>
+          <Text style={styles.priceValue}>₹{bookingData.pricing.childSeat.toLocaleString()}</Text>
         </View>
         
         <View style={styles.separator} />
         
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>Subtotal:</Text>
-          <Text style={styles.priceValue}>₹{tripData.pricing.subtotal.toLocaleString()}</Text>
+          <Text style={styles.priceValue}>₹{bookingData.pricing.subtotal.toLocaleString()}</Text>
         </View>
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>Platform fee:</Text>
-          <Text style={styles.priceValue}>₹{tripData.pricing.platformFee.toLocaleString()}</Text>
+          <Text style={styles.priceValue}>₹{bookingData.pricing.platformFee.toLocaleString()}</Text>
         </View>
         <View style={styles.priceRow}>
           <Text style={styles.priceLabel}>GST (18%):</Text>
-          <Text style={styles.priceValue}>₹{tripData.pricing.gst.toLocaleString()}</Text>
+          <Text style={styles.priceValue}>₹{bookingData.pricing.gst.toLocaleString()}</Text>
         </View>
         
-        {tripData.pricing.coupon && (
+        {bookingData.pricing.coupon && (
           <View style={styles.discountSection}>
             <View style={styles.priceRow}>
               <Text style={[styles.priceLabel, styles.discountLabel]}>
-                Coupon ({tripData.pricing.coupon.code}):
+                Coupon ({bookingData.pricing.coupon.code}):
               </Text>
               <Text style={[styles.priceValue, styles.discountValue]}>
-                -₹{tripData.pricing.coupon.discount.toLocaleString()}
+                -₹{bookingData.pricing.coupon.discount.toLocaleString()}
               </Text>
             </View>
           </View>
@@ -396,14 +396,14 @@ export default function TripDetailsScreen() {
         
         <View style={styles.priceRow}>
           <Text style={styles.totalLabel}>Total paid:</Text>
-          <Text style={styles.totalValue}>₹{tripData.pricing.total.toLocaleString()}</Text>
+          <Text style={styles.totalValue}>₹{bookingData.pricing.total.toLocaleString()}</Text>
         </View>
         
         <View style={styles.paymentInfo}>
-          <Text style={styles.paymentMethod}>Payment method: {tripData.pricing.paymentMethod}</Text>
+          <Text style={styles.paymentMethod}>Payment method: {bookingData.pricing.paymentMethod}</Text>
           <View style={styles.paymentStatus}>
             <Ionicons name="checkmark-circle" size={16} color={Colors.functional.success} />
-            <Text style={styles.paymentStatusText}>{tripData.pricing.paymentStatus}</Text>
+            <Text style={styles.paymentStatusText}>{bookingData.pricing.paymentStatus}</Text>
           </View>
         </View>
       </View>
@@ -411,7 +411,7 @@ export default function TripDetailsScreen() {
       <View style={styles.securityDeposit}>
         <Text style={styles.securityTitle}>Security Deposit</Text>
         <View style={styles.securityInfo}>
-          <Text style={styles.securityAmount}>₹{tripData.pricing.securityDeposit.toLocaleString()}</Text>
+          <Text style={styles.securityAmount}>₹{bookingData.pricing.securityDeposit.toLocaleString()}</Text>
           <Text style={styles.securityStatus}>On hold</Text>
         </View>
         <Text style={styles.securityNote}>Refunded after trip inspection</Text>
@@ -425,28 +425,28 @@ export default function TripDetailsScreen() {
       <Text style={styles.cardTitle}>Owner Information</Text>
       
       <View style={styles.ownerDetails}>
-        <Image source={{ uri: tripData.owner.photo }} style={styles.ownerPhoto} />
+        <Image source={{ uri: bookingData.owner.photo }} style={styles.ownerPhoto} />
         <View style={styles.ownerInfo}>
           <View style={styles.ownerHeader}>
-            <Text style={styles.ownerName}>{tripData.owner.name}</Text>
-            {tripData.owner.verified && (
+            <Text style={styles.ownerName}>{bookingData.owner.name}</Text>
+            {bookingData.owner.verified && (
               <Ionicons name="checkmark-circle" size={16} color={Colors.functional.success} />
             )}
           </View>
           <View style={styles.ownerRating}>
             <Ionicons name="star" size={14} color="#FFD700" />
             <Text style={styles.ownerRatingText}>
-              {tripData.owner.rating} ({tripData.owner.reviewCount} reviews)
+              {bookingData.owner.rating} ({bookingData.owner.reviewCount} reviews)
             </Text>
           </View>
-          <Text style={styles.responseTime}>{tripData.owner.responseTime}</Text>
+          <Text style={styles.responseTime}>{bookingData.owner.responseTime}</Text>
         </View>
       </View>
       
       <View style={styles.ownerActions}>
         <TouchableOpacity 
           style={styles.ownerActionButton}
-          onPress={() => callPhone(tripData.owner.phone)}
+          onPress={() => callPhone(bookingData.owner.phone)}
         >
           <Ionicons name="call" size={16} color={Colors.primary.teal} />
           <Text style={styles.ownerActionText}>Call Owner</Text>
@@ -471,7 +471,7 @@ export default function TripDetailsScreen() {
       
       <View style={styles.documentsSection}>
         <Text style={styles.documentsSectionTitle}>Your Documents</Text>
-        {tripData.documents.userDocs.map((doc, index) => (
+        {bookingData.documents.userDocs.map((doc, index) => (
           <View key={index} style={styles.documentItem}>
             <View style={styles.documentInfo}>
               <Text style={styles.documentType}>{doc.type}</Text>
@@ -503,7 +503,7 @@ export default function TripDetailsScreen() {
       
       <View style={styles.documentsSection}>
         <Text style={styles.documentsSectionTitle}>Vehicle Documents</Text>
-        {tripData.documents.vehicleDocs.map((doc, index) => (
+        {bookingData.documents.vehicleDocs.map((doc, index) => (
           <View key={index} style={styles.documentItem}>
             <View style={styles.documentInfo}>
               <Text style={styles.documentType}>{doc.type}</Text>
@@ -630,7 +630,7 @@ export default function TripDetailsScreen() {
 
   const renderBottomActions = () => {
     const getActionButtons = () => {
-      switch (tripData.status) {
+      switch (bookingData.status) {
         case 'upcoming':
           return [
             { icon: 'document-text', text: 'Upload Documents', color: Colors.primary.teal },

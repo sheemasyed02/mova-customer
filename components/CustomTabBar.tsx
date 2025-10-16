@@ -4,10 +4,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { AnimatedTabBar } from './AnimatedTabBar';
 
@@ -31,9 +31,9 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = React.memo(({
     const iconMap: Record<string, { focused: string; unfocused: string }> = {
       index: { focused: 'home', unfocused: 'home-outline' },
       explore: { focused: 'search', unfocused: 'search-outline' },
-      trips: { focused: 'car-sport', unfocused: 'car-sport-outline' },
+      vehicles: { focused: 'car', unfocused: 'car-outline' },
       inbox: { focused: 'chatbubbles', unfocused: 'chatbubbles-outline' },
-      bookings: { focused: 'calendar', unfocused: 'calendar-outline' },
+      'my-bookings': { focused: 'list', unfocused: 'list-outline' },
     };
 
     return focused 
@@ -45,9 +45,9 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = React.memo(({
     const labelMap: Record<string, string> = {
       index: 'Home',
       explore: 'Explore',
-      trips: 'My Trips',
+      vehicles: 'Vehicles',
       inbox: 'Inbox',
-      bookings: 'Bookings',
+      'my-bookings': 'My Bookings',
     };
 
     return labelMap[routeName] || routeName;
