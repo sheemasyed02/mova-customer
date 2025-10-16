@@ -68,6 +68,8 @@ function RootLayoutNav() {
         <Stack.Screen name="booking-details" options={{ headerShown: false }} />
         <Stack.Screen name="rate-review" options={{ headerShown: false }} />
         <Stack.Screen name="favorites" options={{ headerShown: false }} />
+        <Stack.Screen name="inbox" options={{ headerShown: false }} />
+        <Stack.Screen name="conversation" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />

@@ -3,16 +3,16 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  ActionSheetIOS,
-  Alert,
-  Dimensions,
-  FlatList,
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
+    ActionSheetIOS,
+    Alert,
+    Dimensions,
+    FlatList,
+    Platform,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -319,7 +319,14 @@ export default function InboxScreen() {
 
   const renderHeader = () => (
     <View style={styles.header}>
-      <View style={styles.headerTop}>        
+      <View style={styles.headerTop}>
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
+          <Ionicons name="chevron-back" size={24} color={Colors.text.primary} />
+        </TouchableOpacity>
+        
         <View style={styles.headerCenter}>
           <Text style={styles.headerTitle}>Inbox</Text>
           {getUnreadCount() > 0 && (
@@ -559,6 +566,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  backButton: {
+    padding: 8,
+    marginRight: 16,
   },
   headerCenter: {
     flex: 1,
