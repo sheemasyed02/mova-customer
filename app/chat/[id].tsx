@@ -270,6 +270,28 @@ export default function ChatScreen() {
     sendMessage(text);
   };
 
+  const handleMessageLongPress = (message: Message) => {
+    // Simple vibration feedback for better UX
+    if (Platform.OS === 'ios') {
+      // For iOS, we can use Haptics if available
+    } else {
+      // For Android, simple approach
+    }
+    
+    Alert.alert(
+      'Message Options',
+      `Options for: "${message.text.substring(0, 30)}${message.text.length > 30 ? '...' : ''}"`,
+      [
+        { text: 'Pin Message', onPress: () => console.log('Pin message:', message.id) },
+        { text: 'Mark as Unread', onPress: () => console.log('Mark as unread:', message.id) },
+        { text: 'Archive', onPress: () => console.log('Archive message:', message.id) },
+        { text: 'Copy Text', onPress: () => console.log('Copy text:', message.text) },
+        { text: 'Report', onPress: () => console.log('Report message:', message.id), style: 'destructive' },
+        { text: 'Cancel', style: 'cancel' }
+      ]
+    );
+  };
+
   const getMessageStatusIcon = (status: string) => {
     switch (status) {
       case 'sent':
@@ -341,7 +363,11 @@ export default function ChatScreen() {
         {!item.isOwn && (
           <Text style={styles.contactAvatar}>{contact.avatar}</Text>
         )}
-        <View style={[styles.messageBubble, item.isOwn ? styles.ownMessage : styles.otherMessage]}>
+        <TouchableOpacity 
+          style={[styles.messageBubble, item.isOwn ? styles.ownMessage : styles.otherMessage]}
+          onLongPress={() => handleMessageLongPress(item)}
+          activeOpacity={0.8}
+        >
           <Text style={[styles.messageText, item.isOwn && styles.ownMessageText]}>
             {item.text}
           </Text>
@@ -351,7 +377,7 @@ export default function ChatScreen() {
             </Text>
             {item.isOwn && getMessageStatusIcon(item.status || 'sent')}
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   };

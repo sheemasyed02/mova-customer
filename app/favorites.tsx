@@ -4,17 +4,17 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    ActionSheetIOS,
-    Alert,
-    Dimensions,
-    FlatList,
-    Platform,
-    ScrollView,
-    Share,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  ActionSheetIOS,
+  Alert,
+  Dimensions,
+  FlatList,
+  Platform,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -562,7 +562,7 @@ export default function FavoritesScreen() {
         {/* Vehicle image */}
         <View style={isGrid ? styles.gridImageContainer : styles.listImageContainer}>
           <View style={styles.placeholderImage}>
-            <Ionicons name="car-sport" size={isGrid ? 40 : 30} color={Colors.primary.teal} />
+            <Ionicons name="car-sport" size={isGrid ? 32 : 24} color={Colors.primary.teal} />
             <Text style={styles.vehicleNameInImage}>{item.name}</Text>
           </View>
         </View>
@@ -577,12 +577,12 @@ export default function FavoritesScreen() {
               style={styles.heartButton}
               onPress={() => toggleFavorite(item.id)}
             >
-              <Ionicons name="heart" size={20} color={Colors.functional.error} />
+              <Ionicons name="heart" size={16} color={Colors.functional.error} />
             </TouchableOpacity>
           </View>
 
           <View style={styles.vehicleRating}>
-            <Ionicons name="star" size={14} color="#FFC107" />
+            <Ionicons name="star" size={12} color="#FFC107" />
             <Text style={styles.ratingText}>
               {item.rating} ({item.reviews} reviews)
             </Text>
@@ -605,7 +605,7 @@ export default function FavoritesScreen() {
           </View>
 
           <View style={styles.locationContainer}>
-            <Ionicons name="location" size={12} color={Colors.text.secondary} />
+            <Ionicons name="location" size={10} color={Colors.text.secondary} />
             <Text style={styles.locationText}>
               {item.distance} km away • {item.location}
             </Text>
@@ -710,8 +710,8 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: Colors.background.white,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
@@ -721,30 +721,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backButton: {
-    padding: 8,
-    marginRight: 16,
+    padding: 6,
+    marginRight: 12,
   },
   headerLeft: {
     flex: 1,
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: '700',
     color: Colors.text.primary,
-    marginBottom: 4,
+    marginBottom: 2,
   },
   headerSubtitle: {
-    fontSize: 14,
+    fontSize: 13,
     color: Colors.text.secondary,
   },
   headerActions: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 8,
   },
   headerButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: Colors.background.lightGrey,
     justifyContent: 'center',
     alignItems: 'center',
@@ -765,23 +765,23 @@ const styles = StyleSheet.create({
   },
   viewOptions: {
     backgroundColor: Colors.background.white,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
   viewToggle: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: 12,
     backgroundColor: Colors.background.lightGrey,
-    borderRadius: 8,
-    padding: 4,
+    borderRadius: 6,
+    padding: 3,
     alignSelf: 'flex-start',
   },
   viewButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 4,
   },
   viewButtonActive: {
     backgroundColor: Colors.background.white,
@@ -813,27 +813,27 @@ const styles = StyleSheet.create({
   },
   collectionsContainer: {
     backgroundColor: Colors.background.white,
-    paddingVertical: 16,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
   collectionsTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '600',
     color: Colors.text.primary,
-    marginBottom: 12,
-    paddingHorizontal: 20,
+    marginBottom: 10,
+    paddingHorizontal: 16,
   },
   collectionCard: {
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    marginLeft: 20,
-    marginRight: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginLeft: 16,
+    marginRight: 3,
     backgroundColor: Colors.background.lightGrey,
-    borderRadius: 12,
-    minWidth: 80,
-    borderWidth: 2,
+    borderRadius: 10,
+    minWidth: 70,
+    borderWidth: 1.5,
     borderColor: 'transparent',
   },
   collectionCardActive: {
@@ -841,22 +841,22 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background.white,
   },
   collectionIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   collectionName: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 11,
+    fontWeight: '500',
     color: Colors.text.primary,
     textAlign: 'center',
-    marginBottom: 2,
+    marginBottom: 1,
   },
   collectionCount: {
-    fontSize: 11,
+    fontSize: 10,
     color: Colors.text.secondary,
   },
   filtersContainer: {
@@ -923,32 +923,32 @@ const styles = StyleSheet.create({
     color: Colors.primary.teal,
   },
   listContainer: {
-    padding: 16,
+    padding: 12,
     paddingBottom: 100,
   },
   gridCard: {
     flex: 1,
     backgroundColor: Colors.background.white,
-    borderRadius: 16,
-    margin: 4,
+    borderRadius: 12,
+    margin: 3,
     overflow: 'hidden',
-    elevation: 2,
+    elevation: 1,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
     position: 'relative',
   },
   listCard: {
     backgroundColor: Colors.background.white,
-    borderRadius: 16,
-    marginBottom: 12,
+    borderRadius: 12,
+    marginBottom: 8,
     overflow: 'hidden',
-    elevation: 2,
+    elevation: 1,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
     position: 'relative',
     flexDirection: 'row',
   },
@@ -1036,11 +1036,11 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   gridImageContainer: {
-    height: 120,
+    height: 100,
     backgroundColor: '#F9FAFB',
   },
   listImageContainer: {
-    width: 120,
+    width: 100,
     backgroundColor: '#F9FAFB',
   },
   placeholderImage: {
@@ -1050,80 +1050,80 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
   },
   vehicleNameInImage: {
-    fontSize: 10,
+    fontSize: 9,
     color: Colors.text.secondary,
-    marginTop: 4,
+    marginTop: 3,
     textAlign: 'center',
-    paddingHorizontal: 4,
+    paddingHorizontal: 3,
   },
   gridDetails: {
-    padding: 12,
+    padding: 10,
   },
   listDetails: {
     flex: 1,
-    padding: 16,
+    padding: 12,
   },
   vehicleHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   vehicleName: {
     flex: 1,
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '600',
     color: Colors.text.primary,
-    marginRight: 8,
+    marginRight: 6,
   },
   heartButton: {
-    padding: 4,
+    padding: 3,
   },
   vehicleRating: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 6,
-    gap: 4,
+    marginBottom: 4,
+    gap: 3,
   },
   ratingText: {
-    fontSize: 12,
+    fontSize: 11,
     color: Colors.text.secondary,
   },
   vehicleSpecs: {
-    fontSize: 12,
+    fontSize: 11,
     color: Colors.text.secondary,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   featuresContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 8,
-    gap: 4,
+    marginBottom: 6,
+    gap: 3,
   },
   featureTag: {
     backgroundColor: '#F0F9FF',
-    paddingHorizontal: 6,
+    paddingHorizontal: 5,
     paddingVertical: 2,
-    borderRadius: 6,
+    borderRadius: 5,
   },
   featureText: {
-    fontSize: 10,
+    fontSize: 9,
     color: Colors.primary.teal,
     fontWeight: '500',
   },
   moreFeatures: {
-    fontSize: 10,
+    fontSize: 9,
     color: Colors.text.secondary,
     alignSelf: 'center',
   },
   locationContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    marginBottom: 8,
+    gap: 3,
+    marginBottom: 6,
   },
   locationText: {
-    fontSize: 11,
+    fontSize: 10,
     color: Colors.text.secondary,
   },
   vehicleFooter: {
@@ -1135,38 +1135,38 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   priceLabel: {
-    fontSize: 10,
+    fontSize: 9,
     color: Colors.text.secondary,
-    marginBottom: 2,
+    marginBottom: 1,
   },
   priceRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
   },
   price: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 13,
+    fontWeight: '600',
     color: Colors.primary.teal,
   },
   originalPrice: {
-    fontSize: 12,
+    fontSize: 11,
     color: Colors.text.secondary,
     textDecorationLine: 'line-through',
   },
   bookButton: {
-    borderRadius: 8,
+    borderRadius: 6,
     overflow: 'hidden',
   },
   bookButtonDisabled: {
     opacity: 0.6,
   },
   bookButtonGradient: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
   },
   bookButtonText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
     color: '#ffffff',
   },
