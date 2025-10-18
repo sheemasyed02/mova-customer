@@ -451,6 +451,25 @@ export default function EditProfileScreen() {
             </View>
           </View>
 
+          {/* Account Settings */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Account Settings</Text>
+            
+            <TouchableOpacity 
+              style={styles.settingItem}
+              onPress={() => router.push('/saved-addresses' as any)}
+            >
+              <View style={styles.settingIconContainer}>
+                <Ionicons name="location" size={20} color={Colors.primary.teal} />
+              </View>
+              <View style={styles.settingContent}>
+                <Text style={styles.settingTitle}>Saved Addresses</Text>
+                <Text style={styles.settingSubtitle}>Manage your delivery addresses</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
+            </TouchableOpacity>
+          </View>
+
           {/* Action Buttons */}
           <View style={styles.actionSection}>
             <TouchableOpacity
@@ -957,5 +976,37 @@ const styles = StyleSheet.create({
   genderOptionTextActive: {
     color: Colors.primary.teal,
     fontWeight: '500',
+  },
+
+  // Settings Section
+  settingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 0,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  settingIconContainer: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: Colors.primary.teal + '15',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  settingContent: {
+    flex: 1,
+  },
+  settingTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Colors.text.primary,
+    marginBottom: 2,
+  },
+  settingSubtitle: {
+    fontSize: 12,
+    color: Colors.text.secondary,
   },
 });
