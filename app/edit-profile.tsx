@@ -468,6 +468,20 @@ export default function EditProfileScreen() {
               </View>
               <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
             </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.settingItem}
+              onPress={() => router.push('/payment-methods' as any)}
+            >
+              <View style={styles.settingIconContainer}>
+                <Ionicons name="card" size={20} color={Colors.primary.teal} />
+              </View>
+              <View style={styles.settingContent}>
+                <Text style={styles.settingTitle}>Payment Methods</Text>
+                <Text style={styles.settingSubtitle}>Manage cards, UPI & wallets</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
+            </TouchableOpacity>
           </View>
 
           {/* Action Buttons */}
