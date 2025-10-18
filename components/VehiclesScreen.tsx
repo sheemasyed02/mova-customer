@@ -46,7 +46,6 @@ export default function VehiclesScreen() {
   const { scrollDirection, onScroll, cleanup } = useScrollDirection(8);
   const { updateScrollDirection } = useScrollContext();
   
-  // Update scroll context when scroll direction changes
   React.useEffect(() => {
     updateScrollDirection(scrollDirection);
   }, [scrollDirection, updateScrollDirection]);
@@ -605,4 +604,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
 });
