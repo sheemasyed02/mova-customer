@@ -189,15 +189,14 @@ export default function InboxScreen() {
       m.id === message.id ? { ...m, unreadCount: 0 } : m
     ));
 
-    // Navigate to conversation
+    // Navigate to chat
     router.push({
-      pathname: '/conversation' as any,
+      pathname: '/chat/[id]' as any,
       params: {
-        messageId: message.id,
-        messageType: message.type,
-        messageName: message.name,
-        bookingId: message.bookingId || '',
-        ticketId: message.ticketId || '',
+        id: message.id,
+        contactName: message.name,
+        contactType: message.type,
+        bookingId: message.bookingId || 'MOV-12345',
       }
     });
   };
