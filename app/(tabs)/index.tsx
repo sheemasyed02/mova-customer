@@ -229,7 +229,10 @@ export default function HomeScreen() {
             </View>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.profileButton}>
+          <TouchableOpacity 
+            style={styles.profileButton}
+            onPress={() => router.push('/edit-profile' as any)}
+          >
             <Ionicons name="person" size={20} color={Colors.text.secondary} />
           </TouchableOpacity>
         </View>
