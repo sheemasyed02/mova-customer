@@ -6,16 +6,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    Image,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  FlatList,
+  Image,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -219,7 +219,10 @@ export default function HomeScreen() {
             <Ionicons name="heart-outline" size={20} color={Colors.primary.teal} />
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.notificationButton}>
+          <TouchableOpacity 
+            style={styles.notificationButton}
+            onPress={() => router.push('/notifications' as any)}
+          >
             <Ionicons name="notifications" size={20} color={Colors.text.secondary} />
             <View style={styles.notificationBadge}>
               <Text style={styles.badgeText}>3</Text>
