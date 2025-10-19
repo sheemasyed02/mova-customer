@@ -499,6 +499,20 @@ export default function EditProfileScreen() {
               </View>
               <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
             </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.settingItem}
+              onPress={() => router.push('/rewards-page' as any)}
+            >
+              <View style={styles.settingIconContainer}>
+                <Ionicons name="star" size={20} color={Colors.primary.teal} />
+              </View>
+              <View style={styles.settingContent}>
+                <Text style={styles.settingTitle}>MOVA Points</Text>
+                <Text style={styles.settingSubtitle}>Earn points & redeem rewards</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
+            </TouchableOpacity>
           </View>
 
           {/* Action Buttons */}
