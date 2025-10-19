@@ -6,11 +6,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
-import LoadingScreen from '@/components/LoadingScreen';
-import { useColorScheme } from '@/components/useColorScheme';
+import LoadingScreen from '@/src/shared/components/ui/loading-screen';
+import { useColorScheme } from '@/src/shared/hooks/use-color-scheme';
 
 export {
-    // Catch any errors thrown by the Layout component.
+    // Catch any errors thrown by the Layout component. 
     ErrorBoundary
 } from 'expo-router';
 
@@ -52,7 +52,7 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="splash" options={{ headerShown: false }} />
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
@@ -67,16 +67,19 @@ function RootLayoutNav() {
         <Stack.Screen name="my-bookings" options={{ headerShown: false }} />
         <Stack.Screen name="booking-details" options={{ headerShown: false }} />
         <Stack.Screen name="rate-review" options={{ headerShown: false }} />
-        <Stack.Screen name="favorites" options={{ headerShown: false }} />
         <Stack.Screen name="inbox" options={{ headerShown: false }} />
         <Stack.Screen name="conversation" options={{ headerShown: false }} />
         <Stack.Screen name="chat/[id]" options={{ headerShown: false }} />
-        <Stack.Screen name="notifications" options={{ headerShown: false }} />
-        <Stack.Screen name="edit-profile" options={{ headerShown: false }} />
-        <Stack.Screen name="saved-addresses" options={{ headerShown: false }} />
-        <Stack.Screen name="payment-methods" options={{ headerShown: false }} />
+        <Stack.Screen name="notifications-page" options={{ headerShown: false }} />
+        <Stack.Screen name="edit-profile-page" options={{ headerShown: false }} />
+        <Stack.Screen name="saved-addresses-page" options={{ headerShown: false }} />
+        <Stack.Screen name="payment-methods-page" options={{ headerShown: false }} />
+        <Stack.Screen name="vehicle-details-page" options={{ headerShown: false }} />
+        <Stack.Screen name="favorites-page" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(features)" options={{ headerShown: false, title: "" }} />
+        <Stack.Screen name="(main)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>

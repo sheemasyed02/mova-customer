@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet } from 'react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import EditScreenInfo from '@/src/shared/components/ui/edit-screen-info';
+import { Text, View } from '@/src/shared/components/ui/themed';
 
 export default function ModalScreen() {
   return (
@@ -15,7 +15,7 @@ export default function ModalScreen() {
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );
-}
+} 
 
 const styles = StyleSheet.create({
   container: {
