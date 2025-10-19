@@ -527,6 +527,20 @@ export default function EditProfileScreen() {
               </View>
               <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
             </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.settingItem}
+              onPress={() => router.push('/help-support-page' as any)}
+            >
+              <View style={styles.settingIconContainer}>
+                <Ionicons name="help-circle" size={20} color={Colors.primary.teal} />
+              </View>
+              <View style={styles.settingContent}>
+                <Text style={styles.settingTitle}>Help & Support</Text>
+                <Text style={styles.settingSubtitle}>Get assistance and answers</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
+            </TouchableOpacity>
           </View>
 
           {/* Action Buttons */}
