@@ -5,17 +5,17 @@ import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Alert,
-  Image,
-  KeyboardAvoidingView,
-  Modal,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Alert,
+    Image,
+    KeyboardAvoidingView,
+    Modal,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -510,6 +510,20 @@ export default function EditProfileScreen() {
               <View style={styles.settingContent}>
                 <Text style={styles.settingTitle}>MOVA Points</Text>
                 <Text style={styles.settingSubtitle}>Earn points & redeem rewards</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.settingItem}
+              onPress={() => router.push('/offers-page' as any)}
+            >
+              <View style={styles.settingIconContainer}>
+                <Ionicons name="pricetag" size={20} color={Colors.primary.teal} />
+              </View>
+              <View style={styles.settingContent}>
+                <Text style={styles.settingTitle}>Offers & Coupons</Text>
+                <Text style={styles.settingSubtitle}>View & apply promotional offers</Text>
               </View>
               <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
             </TouchableOpacity>

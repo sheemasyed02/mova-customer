@@ -303,14 +303,17 @@ export default function HomeScreen() {
           onPress={() => {
             if (item.title === 'Refer & Earn') {
               router.push('/referral-page' as any);
+            } else if (item.title.includes('OFF') || item.title.includes('SALE') || item.title.includes('Special')) {
+              router.push('/offers-page' as any);
             } else {
               // Handle other promotions - could navigate to booking or deals
-              console.log('Navigate to booking with promotion:', item.title);
+              router.push('/(main)' as any);
             }
           }}
         >
           <Text style={styles.promoButtonText}>
-            {item.title === 'Refer & Earn' ? 'Start Earning' : 'Book Now'}
+            {item.title === 'Refer & Earn' ? 'Start Earning' : 
+             (item.title.includes('OFF') || item.title.includes('SALE') || item.title.includes('Special')) ? 'View Offers' : 'Book Now'}
           </Text>
         </TouchableOpacity>
       </View>
