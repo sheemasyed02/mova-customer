@@ -485,6 +485,20 @@ export default function EditProfileScreen() {
               </View>
               <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
             </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.settingItem}
+              onPress={() => router.push('/referral-page' as any)}
+            >
+              <View style={styles.settingIconContainer}>
+                <Ionicons name="gift" size={20} color={Colors.primary.teal} />
+              </View>
+              <View style={styles.settingContent}>
+                <Text style={styles.settingTitle}>Refer & Earn</Text>
+                <Text style={styles.settingSubtitle}>Earn ₹500 for each referral</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
+            </TouchableOpacity>
           </View>
 
           {/* Action Buttons */}

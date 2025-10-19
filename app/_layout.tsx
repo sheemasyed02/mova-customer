@@ -77,6 +77,7 @@ function RootLayoutNav() {
         <Stack.Screen name="vehicle-details-page" options={{ headerShown: false }} />
         <Stack.Screen name="favorites-page" options={{ headerShown: false }} />
         <Stack.Screen name="documents-page" options={{ headerShown: false }} />
+        <Stack.Screen name="referral-page" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(features)" options={{ headerShown: false, title: "" }} />

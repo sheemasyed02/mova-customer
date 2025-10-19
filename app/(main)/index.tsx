@@ -6,16 +6,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    Image,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  FlatList,
+  Image,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -95,6 +95,13 @@ export default function HomeScreen() {
       subtitle: 'Luxury cars available',
       image: '',
       backgroundColor: Colors.functional.info,
+    },
+    {
+      id: '4',
+      title: 'Refer & Earn',
+      subtitle: 'Give ₹200, Get ₹500',
+      image: '',
+      backgroundColor: Colors.primary.darkTeal,
     },
   ];
 
@@ -291,8 +298,20 @@ export default function HomeScreen() {
       <View style={styles.promoContent}>
         <Text style={styles.promoTitle}>{item.title}</Text>
         <Text style={styles.promoSubtitle}>{item.subtitle}</Text>
-        <TouchableOpacity style={styles.promoButton}>
-          <Text style={styles.promoButtonText}>Book Now</Text>
+        <TouchableOpacity 
+          style={styles.promoButton}
+          onPress={() => {
+            if (item.title === 'Refer & Earn') {
+              router.push('/referral-page' as any);
+            } else {
+              // Handle other promotions - could navigate to booking or deals
+              console.log('Navigate to booking with promotion:', item.title);
+            }
+          }}
+        >
+          <Text style={styles.promoButtonText}>
+            {item.title === 'Refer & Earn' ? 'Start Earning' : 'Book Now'}
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={styles.promoImageContainer}>
