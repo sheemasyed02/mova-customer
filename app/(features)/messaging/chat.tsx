@@ -61,7 +61,6 @@ export default function ChatScreen() {
   const [isRecording, setIsRecording] = useState(false);
   const typingAnimation = useRef(new Animated.Value(0)).current;
 
-  // Dynamic contact data based on params
   const contact: Contact = {
     id: id as string,
     name: contactName as string || 'Customer Support',
@@ -872,4 +871,5 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     fontWeight: '500',
   },
+
 });
