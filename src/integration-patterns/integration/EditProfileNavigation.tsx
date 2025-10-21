@@ -1,5 +1,3 @@
-// Example of how to navigate to Edit Profile screen from any component
-
 import { useRouter } from 'expo-router';
 import { Text, TouchableOpacity } from 'react-native';
 
@@ -34,3 +32,4 @@ export default function ExampleNavigationToEditProfile() {
   <Ionicons name="chevron-forward" size={16} color={Colors.text.secondary} />
 </TouchableOpacity>
 */
+
