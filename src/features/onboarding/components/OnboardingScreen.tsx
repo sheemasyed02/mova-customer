@@ -32,7 +32,6 @@ export default function OnboardingScreen() {
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
-  // Smooth entrance animations
   useEffect(() => {
     Animated.parallel([
       Animated.timing(fadeAnim, {
@@ -299,3 +298,4 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
 });
+
