@@ -2,7 +2,6 @@
  * Example: How to navigate to Payment Methods Screen
  * 
  * This file demonstrates different ways to navigate to the payment methods screen
- * from various parts of your app.
  */
 
 import { Colors } from '@/src/shared/constants/Colors';
@@ -274,3 +273,4 @@ const styles = StyleSheet.create({
 });
 
 export default PaymentMethodsNavigationExamples;
+
