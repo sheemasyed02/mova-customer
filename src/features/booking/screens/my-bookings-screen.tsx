@@ -73,7 +73,6 @@ export default function MyBookingsScreen() {
     };
   }, [cleanup]);
 
-  // Sample data - replace with actual API data
   const sampleBookings: BookingData[] = [
     {
       id: '1',
@@ -1017,3 +1016,4 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary.teal,
   },
 });
+
